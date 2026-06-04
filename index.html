@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baptism Invitation – Mateo | June 13, 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #dcc89b;
+            --gold-dark: #a6844c;
+            --cream: #fdf8f0;
+            --cream-dark: #f5ecd7;
+            --white: #ffffff;
+            --text: #3d332b;
+            --text-light: #6b5f55;
+            --text-lighter: #8c7f74;
+            --sage: #b7c9b1;
+            --sage-light: #dce8d7;
+            --soft-blush: #f2e4df;
+            --card-shadow: 0 4px 30px rgba(0, 0, 0, 0.06), 0 1px 8px rgba(0, 0, 0, 0.04);
+            --card-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.10), 0 4px 16px rgba(0, 0, 0, 0.06);
+            --border-radius: 20px;
+            --border-radius-sm: 12px;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, 'Times New Roman', serif;
+            background: linear-gradient(175deg, #fdf8f0 0%, #f9f2e4 25%, #fdf7ef 50%, #faf3e8 75%, #fdf8f0 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Canvas for floating particles */
+        #particlesCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Main container */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 620px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            padding: 10px 0 40px;
+        }
+
+        /* Envelope overlay */
+        .envelope-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(253, 248, 240, 0.96);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            opacity: 1;
+            visibility: visible;
+            cursor: pointer;
+        }
+        .envelope-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .envelope-container {
+            text-align: center;
+            animation: floatEnvelope 3s ease-in-out infinite;
+        }
+        @keyframes floatEnvelope {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .envelope-icon {
+            font-size: 110px;
+            filter: drop-shadow(0 4px 16px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+        .envelope-overlay:hover .envelope-icon {
+            transform: scale(1.05);
+        }
+        .envelope-text {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gold-dark);
+            margin-top: 12px;
+        }
+
+        /* Music toggle button */
+        .music-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            z-index: 900;
+            cursor: pointer;
+            border: 2px solid var(--gold-light);
+            transition: all 0.3s;
+            user-select: none;
+        }
+        .music-toggle:hover {
+            background: var(--gold-light);
+            color: white;
+            border-color: var(--gold);
+            transform: scale(1.08);
+        }
+
+        /* === HERO CARD (with 3D tilt) === */
+        .hero-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 50px 36px 44px;
+            text-align: center;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: transform 0.2s ease-out, box-shadow 0.3s;
+            will-change: transform;
+            perspective: 800px;
+        }
+        .hero-card.visible {
+            animation: cardEntrance 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+
+        @keyframes cardEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: -60px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.10) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: -40px;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(183, 201, 177, 0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cross-icon {
+            font-size: 42px;
+            color: var(--gold);
+            margin-bottom: 6px;
+            display: block;
+            animation: gentlePulse 3s ease-in-out infinite;
+            filter: drop-shadow(0 2px 6px rgba(201, 169, 110, 0.25));
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.85; }
+            50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .label-baptism {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+        }
+        .baby-name {
+            font-family: 'Great Vibes', 'Cormorant Garamond', cursive;
+            font-size: clamp(48px, 9vw, 72px);
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.1;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .baby-name-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 22px;
+        }
+
+        /* Candle section */
+        .candle-section {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px 24px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .candle-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .candle-title {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 11px;
+            color: var(--text-lighter);
+            margin-bottom: 18px;
+        }
+        .candles-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .candle {
+            width: 30px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+        .candle-body {
+            width: 16px;
+            height: 34px;
+            background: #f5ecd7;
+            border-radius: 8px 8px 4px 4px;
+            border: 1px solid #dcc89b;
+            box-shadow: inset 0 -4px 4px rgba(0,0,0,0.04);
+        }
+        .candle-wick {
+            width: 2px;
+            height: 6px;
+            background: #4a3b2f;
+            margin-bottom: -2px;
+        }
+        .candle-flame {
+            width: 12px;
+            height: 18px;
+            background: radial-gradient(circle at 50% 20%, #fff3b0, #f5a623);
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: flicker 0.8s ease-in-out infinite alternate;
+            box-shadow: 0 0 12px #f9d56e;
+        }
+        .candle.lit .candle-flame {
+            opacity: 1;
+        }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1, 1) rotate(-1deg); }
+            100% { transform: translateX(-50%) scale(1.08, 0.95) rotate(2deg); }
+        }
+
+        /* Blessing wall */
+        .blessing-section {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px 24px;
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .blessing-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .blessing-title {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 11px;
+            color: var(--text-lighter);
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .blessing-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+        .blessing-form input, .blessing-form textarea {
+            font-family: 'Montserrat', sans-serif;
+            padding: 10px 14px;
+            border: 1px solid #e0d8cc;
+            border-radius: 12px;
+            background: var(--cream);
+            font-size: 13px;
+            resize: vertical;
+        }
+        .blessing-form button {
+            align-self: flex-end;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--gold);
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .blessing-form button:hover {
+            background: var(--gold-dark);
+        }
+        .blessings-list {
+            max-height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 4px;
+        }
+        .blessing-card {
+            background: var(--cream);
+            padding: 12px 14px;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 15px;
+            border-left: 3px solid var(--gold-light);
+        }
+        .blessing-card .author {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-top: 4px;
+        }
+
+        /* Keep existing styles (countdown, details, godparents, rsvp, etc.) */
+        .countdown-card, .details-card, .godparents-card, .rsvp-card, .calendar-link-card, .footer-text {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            width: 100%;
+            box-shadow: var(--card-shadow);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .countdown-card.visible, .details-card.visible, .godparents-card.visible, .rsvp-card.visible, .calendar-link-card.visible, .footer-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .countdown-card { padding: 28px 24px; text-align: center; }
+        .countdown-title { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 10px; color: var(--text-lighter); margin-bottom: 16px; }
+        .countdown-grid { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .countdown-item { background: var(--cream); border-radius: var(--border-radius-sm); padding: 14px 16px; min-width: 64px; text-align: center; transition: var(--transition); }
+        .countdown-item:hover { background: var(--cream-dark); transform: translateY(-2px); }
+        .countdown-number { font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 600; color: var(--gold-dark); }
+        .countdown-label { font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 2px; color: var(--text-lighter); margin-top: 6px; }
+        .details-card { padding: 36px 32px; display: flex; flex-direction: column; gap: 22px; }
+        .detail-row { display: flex; align-items: flex-start; gap: 16px; }
+        .detail-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--gold-dark); }
+        .detail-content h4 { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--text-lighter); margin-bottom: 4px; }
+        .detail-content p { font-size: 18px; font-weight: 500; }
+        .sub-text { font-size: 14px; color: var(--text-light); font-style: italic; }
+        .map-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 2px; color: var(--gold-dark); text-decoration: none; margin-top: 4px; }
+        .godparents-card { padding: 36px 32px; text-align: center; position: relative; overflow: hidden; }
+        .godparents-badge { display: inline-block; background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: white; font-family: 'Montserrat', sans-serif; letter-spacing: 4px; font-size: 10px; padding: 8px 20px; border-radius: 50px; margin-bottom: 20px; }
+        .godparents-card h3 { font-size: 26px; font-weight: 500; margin-bottom: 12px; }
+        .godparents-card p { font-size: 17px; color: var(--text-light); font-style: italic; }
+        .highlight { color: var(--gold-dark); font-weight: 600; font-style: normal; }
+        .rsvp-card { padding: 32px; text-align: center; }
+        .rsvp-card h4 { font-family: 'Montserrat', sans-serif; letter-spacing: 3px; font-size: 11px; color: var(--text-lighter); margin-bottom: 20px; }
+        .rsvp-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .btn-rsvp { font-family: 'Montserrat', sans-serif; font-size: 13px; letter-spacing: 2px; padding: 14px 32px; border-radius: 50px; cursor: pointer; border: 2px solid var(--gold); transition: var(--transition); background: transparent; color: var(--gold-dark); }
+        .btn-rsvp.accept { background: var(--gold); color: white; border-color: var(--gold); }
+        .btn-rsvp.accept:hover { background: var(--gold-dark); }
+        .btn-rsvp.decline:hover { background: #fdf2f2; border-color: #d4a0a0; color: #a06060; }
+        .rsvp-confirmation { display: none; margin-top: 20px; padding: 16px; border-radius: 12px; background: var(--sage-light); color: #4a6b4a; font-family: 'Montserrat', sans-serif; font-size: 13px; animation: fadeInUp 0.5s; }
+        .rsvp-confirmation.show { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .calendar-link-card { text-align: center; background: transparent; box-shadow: none; }
+        .btn-calendar { display: inline-flex; align-items: center; gap: 8px; font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 2px; color: var(--text-lighter); text-decoration: none; padding: 12px 24px; border: 1px solid #e0d8cc; border-radius: 50px; }
+        .footer-text { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--text-lighter); opacity: 0.7; margin-top: 8px; background: transparent; box-shadow: none; }
+        .heart { color: #d4a0a0; display: inline-block; animation: gentlePulse 2s infinite; }
+
+        /* Confetti */
+        .confetti-piece {
+            position: fixed; pointer-events: none; z-index: 999;
+            animation: confettiFall 1.8s ease-out forwards; opacity: 0;
+        }
+        @keyframes confettiFall {
+            0% { opacity: 1; transform: translateY(-120px) rotate(0deg) scale(1); }
+            20% { opacity: 1; transform: translateY(10px) rotate(90deg) scale(1.2); }
+            60% { opacity: 0.8; transform: translateY(300px) rotate(300deg) scale(0.8); }
+            100% { opacity: 0; transform: translateY(600px) rotate(720deg) scale(0.3); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating particles canvas -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- Envelope Overlay -->
+    <div class="envelope-overlay" id="envelopeOverlay">
+        <div class="envelope-container">
+            <div class="envelope-icon">✉️</div>
+            <p class="envelope-text">Open Invitation</p>
+        </div>
+    </div>
+
+    <!-- Music Toggle Button -->
+    <div class="music-toggle" id="musicToggle" title="Toggle ambient music">🎵</div>
+
+    <!-- Main wrapper -->
+    <div class="main-wrapper" id="mainWrapper" style="display: none;">
+
+        <!-- HERO CARD (3D tilt applied via JS) -->
+        <div class="hero-card" id="heroCard">
+            <span class="cross-icon">✝</span>
+            <div class="flourish-top" style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:18px;">
+                <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
+                <span style="width:8px; height:8px; background:var(--gold); transform:rotate(45deg); opacity:0.7; border-radius:1px;"></span>
+                <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
+            </div>
+            <p class="label-baptism">Holy Baptism</p>
+            <!-- ✨ CUSTOMIZE: Baby's name -->
+            <h1 class="baby-name">Gio Railey</h1>
+            <p class="baby-name-sub">Son of Lee Adonis &amp; Ghena Clear</p>
+            <p style="font-size:20px; line-height:1.6;">
+                We joyfully invite you, our beloved <span style="color:var(--gold-dark); font-weight:600; font-style:italic;">Ninang &amp; Ninong</span>,<br>
+                to witness and celebrate this sacred milestone.
+            </p>
+        </div>
+
+        <!-- COUNTDOWN -->
+        <div class="countdown-card">
+            <p class="countdown-title">Countdown to the Blessing</p>
+            <div class="countdown-grid" id="countdown">
+                <div class="countdown-item"><span class="countdown-number" id="countdown-days">00</span><span class="countdown-label">Days</span></div>
+                <div class="countdown-item"><span class="countdown-number" id="countdown-hours">00</span><span class="countdown-label">Hours</span></div>
+                <div class="countdown-item"><span class="countdown-number" id="countdown-minutes">00</span><span class="countdown-label">Minutes</span></div>
+                <div class="countdown-item"><span class="countdown-number" id="countdown-seconds">00</span><span class="countdown-label">Seconds</span></div>
+            </div>
+        </div>
+
+        <!-- EVENT DETAILS -->
+        <div class="details-card">
+            <div class="detail-row"><div class="detail-icon">📅</div><div class="detail-content"><h4>Date</h4><p>Friday, June 13, 2026</p><p class="sub-text">8:00 in the morning</p></div></div>
+            <div class="detail-row"><div class="detail-icon">⛪</div><div class="detail-content"><h4>Church</h4><p>Saint Augustine Parish</p><p class="sub-text">WCMV+5QC, Rizal, Tagudin, 2714 Ilocos Sur</p><a href="https://maps.app.goo.gl/4SEcjSg3PmUcZDX2A" target="_blank" class="map-link">View on Map →</a></div></div>
+            <!-- <div class="detail-row"><div class="detail-icon">🍽️</div><div class="detail-content"><h4>Reception</h4><p>The Garden Hall</p><p class="sub-text">Immediately following the ceremony</p><a href="https://maps.google.com/?q=The+Garden+Hall+Quezon+City" target="_blank" class="map-link">View on Map →</a></div></div> -->
+        </div>
+
+        <!-- GODPARENTS MESSAGE -->
+        <div class="godparents-card">
+            <span class="godparents-badge">Ninang &amp; Ninong</span>
+            <h3>You Are Chosen<br>with Love &amp; Faith</h3>
+            <p>As <span class="highlight">godparents</span>, you hold a special place in our son's life — guiding him in faith, surrounding him with love, and being a light on his spiritual journey.</p>
+        </div>
+
+        <!-- LIGHT A PRAYER CANDLE -->
+        <div class="candle-section" id="candleSection">
+            <p class="candle-title">🕯️ Light a Prayer Candle for Mateo</p>
+            <div class="candles-row" id="candlesContainer"></div>
+        </div>
+
+        <!-- BLESSING WALL -->
+        <div class="blessing-section" id="blessingSection">
+            <p class="blessing-title">💬 Leave a Blessing</p>
+            <div class="blessing-form">
+                <input type="text" id="blessingName" placeholder="Your name" maxlength="30">
+                <textarea id="blessingMessage" rows="2" placeholder="Write a short prayer or message..." maxlength="150"></textarea>
+                <button id="submitBlessing">Share Blessing</button>
+            </div>
+            <div class="blessings-list" id="blessingsList"></div>
+        </div>
+
+        <!-- RSVP -->
+        <div class="rsvp-card">
+            <h4>Will You Join Us?</h4>
+            <div class="rsvp-buttons">
+                <button class="btn-rsvp accept" onclick="handleRSVP('accept')">✨ I Wouldn't Miss It</button>
+                <button class="btn-rsvp decline" onclick="handleRSVP('decline')">🙏 With You in Spirit</button>
+            </div>
+            <div class="rsvp-confirmation" id="rsvp-confirmation"></div>
+        </div>
+
+        <!-- ADD TO CALENDAR -->
+        <div class="calendar-link-card">
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baptism+of+Mateo&dates=20260613T020000Z/20260613T040000Z&details=Baptism+celebration+of+Mateo,+son+of+Michael+%26+Isabella&location=St.+Joseph+the+Worker+Parish,+Quezon+City" target="_blank" class="btn-calendar">📆 Add to Google Calendar</a>
+        </div>
+
+        <p class="footer-text">With grateful hearts, <span class="heart">♥</span> Lee Adonis &amp; Ghena Clear</p>
+    </div>
+
+    <script>
+        // ==================== ENVELOPE INTERACTION ====================
+        const envelopeOverlay = document.getElementById('envelopeOverlay');
+        const mainWrapper = document.getElementById('mainWrapper');
+        envelopeOverlay.addEventListener('click', () => {
+            envelopeOverlay.classList.add('hidden');
+            mainWrapper.style.display = 'flex';
+            // Trigger visible animations after a tiny delay
+            setTimeout(() => {
+                document.querySelectorAll('.hero-card, .countdown-card, .details-card, .godparents-card, .candle-section, .blessing-section, .rsvp-card, .calendar-link-card, .footer-text')
+                    .forEach(el => el.classList.add('visible'));
+                initCandles();
+                loadBlessings();
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }, 100);
+        });
+
+        // ==================== AMBIENT MUSIC (Web Audio API) ====================
+        let audioCtx = null;
+        let oscillators = [];
+        let isPlaying = false;
+        const musicToggle = document.getElementById('musicToggle');
+
+        function startAmbient() {
+            if (isPlaying) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const now = audioCtx.currentTime;
+
+            // Soft organ-like pad using two detuned oscillators
+            const freq = 220; // A3
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(0.12, now);
+            gainNode.connect(audioCtx.destination);
+
+            const osc1 = audioCtx.createOscillator();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(freq, now);
+            const osc2 = audioCtx.createOscillator();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(freq * 1.003, now); // slight detune
+
+            osc1.connect(gainNode);
+            osc2.connect(gainNode);
+            osc1.start();
+            osc2.start();
+            oscillators = [osc1, osc2];
+            isPlaying = true;
+            musicToggle.textContent = '🔇';
+        }
+
+        function stopAmbient() {
+            if (!isPlaying) return;
+            oscillators.forEach(o => o.stop());
+            oscillators = [];
+            if (audioCtx) audioCtx.close();
+            audioCtx = null;
+            isPlaying = false;
+            musicToggle.textContent = '🎵';
+        }
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                stopAmbient();
+            } else {
+                startAmbient();
+            }
+        });
+
+        // ==================== COUNTDOWN ====================
+        const baptismDate = new Date('2026-06-13T10:00:00+08:00');
+        function updateCountdown() {
+            const now = new Date();
+            const diff = baptismDate - now;
+            if (diff <= 0) {
+                document.getElementById('countdown-days').textContent = '00';
+                document.getElementById('countdown-hours').textContent = '00';
+                document.getElementById('countdown-minutes').textContent = '00';
+                document.getElementById('countdown-seconds').textContent = '00';
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // ==================== RSVP & CONFETTI ====================
+        function handleRSVP(type) {
+            const confEl = document.getElementById('rsvp-confirmation');
+            if (type === 'accept') {
+                confEl.textContent = '🌟 We are overjoyed! See you on June 13th!';
+                confEl.style.background = '#e8f5e9';
+                confEl.style.color = '#3d6b3d';
+                spawnConfetti();
+            } else {
+                confEl.textContent = '🙏 Your prayers mean everything. Thank you.';
+                confEl.style.background = '#fdf2f2';
+                confEl.style.color = '#7a5050';
+            }
+            confEl.classList.add('show');
+            document.querySelectorAll('.btn-rsvp').forEach(b => b.style.pointerEvents = 'none');
+        }
+
+        function spawnConfetti() {
+            const colors = ['#c9a96e','#dcc89b','#e8d5b7','#f2e4df','#b7c9b1','#dce8d7'];
+            for (let i=0; i<50; i++) {
+                setTimeout(() => {
+                    const piece = document.createElement('div');
+                    piece.className = 'confetti-piece';
+                    piece.style.width = (Math.random()*10+6)+'px';
+                    piece.style.height = (Math.random()*10+6)+'px';
+                    piece.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                    piece.style.left = Math.random()*100+'%';
+                    piece.style.top = -(Math.random()*40+10)+'px';
+                    document.body.appendChild(piece);
+                    setTimeout(() => piece.remove(), 2000);
+                }, i*18);
+            }
+        }
+
+        // ==================== PRAYER CANDLES ====================
+        const candlesContainer = document.getElementById('candlesContainer');
+        const totalCandles = 7;
+        function initCandles() {
+            candlesContainer.innerHTML = '';
+            for (let i = 0; i < totalCandles; i++) {
+                const candle = document.createElement('div');
+                candle.className = 'candle';
+                candle.dataset.index = i;
+                candle.innerHTML = `
+                    <div class="candle-flame"></div>
+                    <div class="candle-wick"></div>
+                    <div class="candle-body"></div>
+                `;
+                candle.addEventListener('click', () => toggleCandle(i, candle));
+                candlesContainer.appendChild(candle);
+            }
+            // load lit state from localStorage
+            const saved = JSON.parse(localStorage.getItem('litCandles') || '[]');
+            saved.forEach(index => {
+                const candle = candlesContainer.children[index];
+                if (candle) candle.classList.add('lit');
+            });
+        }
+
+        function toggleCandle(index, element) {
+            element.classList.toggle('lit');
+            const saved = JSON.parse(localStorage.getItem('litCandles') || '[]');
+            if (element.classList.contains('lit')) {
+                if (!saved.includes(index)) saved.push(index);
+            } else {
+                const idx = saved.indexOf(index);
+                if (idx > -1) saved.splice(idx, 1);
+            }
+            localStorage.setItem('litCandles', JSON.stringify(saved));
+        }
+
+        // ==================== BLESSING WALL ====================
+        const blessingForm = document.getElementById('submitBlessing');
+        const blessingsList = document.getElementById('blessingsList');
+        blessingForm.addEventListener('click', addBlessing);
+
+        function addBlessing() {
+            const name = document.getElementById('blessingName').value.trim();
+            const msg = document.getElementById('blessingMessage').value.trim();
+            if (!msg) return;
+            const blessings = JSON.parse(localStorage.getItem('blessings') || '[]');
+            blessings.push({ name: name || 'Anonymous', message: msg, time: Date.now() });
+            localStorage.setItem('blessings', JSON.stringify(blessings));
+            document.getElementById('blessingName').value = '';
+            document.getElementById('blessingMessage').value = '';
+            renderBlessings(blessings);
+        }
+
+        function loadBlessings() {
+            const blessings = JSON.parse(localStorage.getItem('blessings') || '[]');
+            renderBlessings(blessings);
+        }
+
+        function renderBlessings(blessings) {
+            blessingsList.innerHTML = blessings.map(b => `
+                <div class="blessing-card">
+                    <div>“${b.message}”</div>
+                    <div class="author">— ${b.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== 3D TILT ON HERO CARD ====================
+        const heroCard = document.getElementById('heroCard');
+        heroCard.addEventListener('mousemove', (e) => {
+            const rect = heroCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -4; // max 4deg
+            const rotateY = ((x - centerX) / centerX) * 4;
+            heroCard.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            heroCard.style.boxShadow = '0 12px 36px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.05)';
+        });
+        heroCard.addEventListener('mouseleave', () => {
+            heroCard.style.transform = 'perspective(600px) rotateX(0) rotateY(0)';
+            heroCard.style.boxShadow = '0 4px 30px rgba(0,0,0,0.06), 0 1px 8px rgba(0,0,0,0.04)';
+        });
+
+        // ==================== FLOATING PARTICLES ====================
+        const canvas = document.getElementById('particlesCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.documentElement.scrollHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() { this.reset(true); }
+            reset(initial) {
+                this.x = Math.random() * canvas.width;
+                this.y = initial ? Math.random() * canvas.height : canvas.height + 30;
+                this.size = Math.random() * 2.2 + 0.6;
+                this.speedY = -(Math.random() * 0.28 + 0.08);
+                this.speedX = (Math.random() - 0.5) * 0.2;
+                this.opacity = Math.random() * 0.4 + 0.12;
+                this.twinkleSpeed = Math.random() * 0.01 + 0.005;
+                this.twinkleOffset = Math.random() * Math.PI * 2;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.x < -10) this.x = canvas.width + 10;
+                if (this.x > canvas.width + 10) this.x = -10;
+                if (this.y < -20) { this.y = canvas.height + 20; this.x = Math.random() * canvas.width; }
+                if (this.y > canvas.height + 30) { this.y = -20; }
+            }
+            draw(ctx) {
+                const twinkle = Math.sin(this.twinkleOffset) * 0.3 + 0.7;
+                const alpha = this.opacity * twinkle;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(220, 200, 150, ${alpha})`;
+                ctx.fill();
+            }
+        }
+        for (let i=0; i<40; i++) particles.push(new Particle());
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(ctx); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+</body>
+</html>
