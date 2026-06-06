@@ -359,7 +359,7 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* Blessing section with signature pad */
+        /* Blessing section (no signature pad) */
         .blessing-section {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -398,7 +398,8 @@
             font-size: 13px;
             resize: vertical;
         }
-        .blessing-form button, .signature-actions button {
+        .blessing-form button {
+            align-self: flex-end;
             font-family: 'Montserrat', sans-serif;
             background: var(--gold);
             color: white;
@@ -410,28 +411,8 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        .blessing-form button:hover, .signature-actions button:hover {
+        .blessing-form button:hover {
             background: var(--gold-dark);
-        }
-        .signature-pad-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        .signature-canvas {
-            border: 1px solid var(--gold-light);
-            border-radius: 12px;
-            background: #fffef9;
-            cursor: crosshair;
-            width: 100%;
-            max-width: 280px;
-            height: 120px;
-        }
-        .signature-actions {
-            display: flex;
-            gap: 10px;
         }
         .blessings-list {
             max-height: 200px;
@@ -448,19 +429,6 @@
             text-align: left;
             font-size: 15px;
             border-left: 3px solid var(--gold-light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .blessing-content {
-            flex: 1;
-        }
-        .blessing-signature {
-            width: 60px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: white;
         }
         .blessing-card .author {
             font-family: 'Montserrat', sans-serif;
@@ -486,7 +454,7 @@
             100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
         }
 
-        /* Keep other styles (countdown, details, etc.) */
+        /* Keep other styles */
         .countdown-card, .details-card, .godparents-card, .rsvp-card, .calendar-link-card, .footer-text {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -552,7 +520,6 @@
 
     <div class="music-toggle" id="musicToggle">🎵</div>
 
-    <!-- Photo lightbox -->
     <div class="lightbox" id="lightbox">
         <span class="lightbox-close" id="lightboxClose">&times;</span>
         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23f5ecd7' stroke='%23c9a96e' stroke-width='3'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%233d332b'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%233d332b'/%3E%3Cpath d='M40 55 Q50 65 60 55' stroke='%233d332b' stroke-width='3' fill='none'/%3E%3C/svg%3E" alt="Baby Gio Railey" id="lightboxImg">
@@ -590,13 +557,38 @@
             </div>
         </div>
 
-        <!-- DETAILS -->
+        <!-- EVENT DETAILS (with simple gathering after ceremony) -->
         <div class="details-card">
-            <div class="detail-row"><div class="detail-icon">📅</div><div class="detail-content"><h4>Date</h4><p>Saturday, June 20, 2026</p><p class="sub-text">7:30 in the morning</p></div></div>
-            <div class="detail-row"><div class="detail-icon">⛪</div><div class="detail-content"><h4>Church</h4><p>Saint Augustine Parish</p><p class="sub-text">WCMV+5QC, Rizal, Tagudin, 2714 Ilocos Sur</p><a href="https://maps.app.goo.gl/4SEcjSg3PmUcZDX2A" target="_blank" class="map-link">View on Map →</a></div></div>
+            <div class="detail-row">
+                <div class="detail-icon">📅</div>
+                <div class="detail-content">
+                    <h4>Date</h4>
+                    <p>Saturday, June 20, 2026</p>
+                    <p class="sub-text">7:30 in the morning</p>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-icon">⛪</div>
+                <div class="detail-content">
+                    <h4>Church</h4>
+                    <p>Saint Augustine Parish</p>
+                    <p class="sub-text">WCMV+5QC, Rizal, Tagudin, 2714 Ilocos Sur</p>
+                    <a href="https://maps.app.goo.gl/4SEcjSg3PmUcZDX2A" target="_blank" class="map-link">View on Map →</a>
+                </div>
+            </div>
+            <!-- Simple reception / fellowship (no label "Reception") -->
+            <div class="detail-row">
+                <div class="detail-icon">🥘</div>
+                <div class="detail-content">
+                    <h4>After the Ceremony</h4>
+                    <p>Simple Fellowship Meal</p>
+                    <p class="sub-text">Parish Hall, beside the church</p>
+                    <a href="https://maps.google.com/?q=Parish+Hall+Saint+Augustine+Tagudin" target="_blank" class="map-link">View on Map →</a>
+                </div>
+            </div>
         </div>
 
-        <!-- GODPARENTS -->
+        <!-- GODPARENTS MESSAGE -->
         <div class="godparents-card">
             <span class="godparents-badge">Ninang &amp; Ninong</span>
             <h3>You Are Chosen<br>with Love &amp; Faith</h3>
@@ -609,18 +601,12 @@
             <div class="candles-row" id="candlesContainer"></div>
         </div>
 
-        <!-- BLESSING WALL + SIGNATURE PAD -->
+        <!-- BLESSING WALL (no signature pad) -->
         <div class="blessing-section" id="blessingSection">
-            <p class="blessing-title">💬 Leave a Blessing &amp; Sign</p>
+            <p class="blessing-title">💬 Leave a Blessing</p>
             <div class="blessing-form">
                 <input type="text" id="blessingName" placeholder="Your name" maxlength="30">
                 <textarea id="blessingMessage" rows="2" placeholder="Write a short prayer or message..." maxlength="150"></textarea>
-                <div class="signature-pad-container">
-                    <canvas id="signatureCanvas" class="signature-canvas"></canvas>
-                    <div class="signature-actions">
-                        <button id="clearSignature">Clear</button>
-                    </div>
-                </div>
                 <button id="submitBlessing">Share Blessing</button>
             </div>
             <div class="blessings-list" id="blessingsList"></div>
@@ -651,7 +637,7 @@
     </div>
 
     <script>
-        // ---------- SOUND EFFECTS (Web Audio) ----------
+        // ---------- SOUND EFFECTS ----------
         function playChime(freq = 880, duration = 0.2, type = 'sine') {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -793,56 +779,16 @@
             playChime(1200, 0.3);
         }
 
-        // ---------- SIGNATURE PAD ----------
-        const canvas = document.getElementById('signatureCanvas');
-        const ctx = canvas.getContext('2d');
-        let drawing = false;
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        window.addEventListener('resize', () => {
-            const imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            ctx.putImageData(imgData,0,0);
-        });
-        canvas.addEventListener('mousedown', startDraw);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', () => drawing = false);
-        canvas.addEventListener('mouseleave', () => drawing = false);
-        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e.touches[0]); });
-        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
-        canvas.addEventListener('touchend', () => drawing = false);
-        function startDraw(e) {
-            drawing = true;
-            ctx.beginPath();
-            const rect = canvas.getBoundingClientRect();
-            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-        }
-        function draw(e) {
-            if (!drawing) return;
-            const rect = canvas.getBoundingClientRect();
-            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
-            ctx.strokeStyle = '#3d332b';
-            ctx.lineWidth = 2;
-            ctx.lineCap = 'round';
-            ctx.stroke();
-        }
-        document.getElementById('clearSignature').addEventListener('click', () => {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-        });
-
-        // ---------- BLESSING WALL WITH SIGNATURE ----------
+        // ---------- BLESSING WALL (no signature) ----------
         document.getElementById('submitBlessing').addEventListener('click', () => {
             const name = document.getElementById('blessingName').value.trim();
             const msg = document.getElementById('blessingMessage').value.trim();
             if (!msg) return;
-            const signatureData = canvas.toDataURL();
             const blessings = JSON.parse(localStorage.getItem('blessings') || '[]');
-            blessings.push({ name: name || 'Anonymous', message: msg, signature: signatureData });
+            blessings.push({ name: name || 'Anonymous', message: msg });
             localStorage.setItem('blessings', JSON.stringify(blessings));
             document.getElementById('blessingName').value = '';
             document.getElementById('blessingMessage').value = '';
-            ctx.clearRect(0,0,canvas.width,canvas.height);
             renderBlessings(blessings);
             playChimeSequence();
         });
@@ -855,11 +801,8 @@
             const list = document.getElementById('blessingsList');
             list.innerHTML = blessings.map(b => `
                 <div class="blessing-card">
-                    <div class="blessing-content">
-                        <div>“${b.message}”</div>
-                        <div class="author">— ${b.name}</div>
-                    </div>
-                    ${b.signature && b.signature !== 'data:,' ? `<img src="${b.signature}" class="blessing-signature" alt="signature">` : ''}
+                    <div>“${b.message}”</div>
+                    <div class="author">— ${b.name}</div>
                 </div>
             `).join('');
         }
@@ -902,7 +845,7 @@
             heroCard.style.transform = 'perspective(600px) rotateX(0) rotateY(0)';
         });
 
-        // ---------- PARTICLES (with mouse attraction) ----------
+        // ---------- PARTICLES (mouse attraction) ----------
         const particlesCanvas = document.getElementById('particlesCanvas');
         const pCtx = particlesCanvas.getContext('2d');
         let particles = [];
@@ -928,7 +871,6 @@
                 this.twinkleOffset = Math.random() * Math.PI * 2;
             }
             update() {
-                // gentle attraction toward mouse
                 if (mouse.x && mouse.y) {
                     const dx = mouse.x - this.x;
                     const dy = mouse.y - this.y;
@@ -961,7 +903,7 @@
         }
         animateParticles();
 
-        // Cross icon hidden message
+        // Cross icon hidden scripture
         document.getElementById('crossIcon').addEventListener('click', () => {
             alert('“Let the little children come to me.” – Matthew 19:14');
             playChime(1500, 0.4);
