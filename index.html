@@ -52,6 +52,7 @@
             position: relative;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            cursor: default;
         }
 
         #particlesCanvas {
@@ -125,7 +126,7 @@
             margin-top: 12px;
         }
 
-        /* Music toggle button */
+        /* Music toggle */
         .music-toggle {
             position: fixed;
             bottom: 24px;
@@ -152,7 +153,7 @@
             transform: scale(1.08);
         }
 
-        /* === HERO CARD (with 3D tilt) === */
+        /* Hero card */
         .hero-card {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -213,6 +214,7 @@
             display: block;
             animation: gentlePulse 3s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(201, 169, 110, 0.25));
+            cursor: pointer;
         }
 
         @keyframes gentlePulse {
@@ -220,7 +222,7 @@
             50% { transform: scale(1.08); opacity: 1; }
         }
 
-        /* Baby photo */
+        /* Baby photo lightbox trigger */
         .baby-photo-container {
             display: flex;
             justify-content: center;
@@ -234,36 +236,39 @@
             border: 4px solid var(--gold-light);
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            cursor: pointer;
         }
         .baby-photo:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
-        .label-baptism {
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            font-size: 12px;
-            font-weight: 400;
-            color: var(--gold-dark);
-            margin-bottom: 20px;
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
         }
-        .baby-name {
-            font-family: 'Great Vibes', 'Cormorant Garamond', cursive;
-            font-size: clamp(48px, 9vw, 72px);
-            font-weight: 400;
-            color: var(--text);
-            line-height: 1.1;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
+        .lightbox.active {
+            display: flex;
         }
-        .baby-name-sub {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 18px;
-            font-weight: 400;
-            color: var(--text-light);
-            font-style: italic;
-            margin-bottom: 22px;
+        .lightbox img {
+            max-width: 80%;
+            max-height: 80%;
+            border-radius: 20px;
+            border: 5px solid white;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
         }
 
         /* Candle section */
@@ -340,8 +345,21 @@
             0% { transform: translateX(-50%) scale(1, 1) rotate(-1deg); }
             100% { transform: translateX(-50%) scale(1.08, 0.95) rotate(2deg); }
         }
+        .candle:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 65px;
+            background: #3d332b;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            white-space: nowrap;
+            z-index: 5;
+            font-family: 'Montserrat', sans-serif;
+        }
 
-        /* Blessing wall */
+        /* Blessing section with signature pad */
         .blessing-section {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -380,8 +398,7 @@
             font-size: 13px;
             resize: vertical;
         }
-        .blessing-form button {
-            align-self: flex-end;
+        .blessing-form button, .signature-actions button {
             font-family: 'Montserrat', sans-serif;
             background: var(--gold);
             color: white;
@@ -393,8 +410,28 @@
             cursor: pointer;
             transition: background 0.3s;
         }
-        .blessing-form button:hover {
+        .blessing-form button:hover, .signature-actions button:hover {
             background: var(--gold-dark);
+        }
+        .signature-pad-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .signature-canvas {
+            border: 1px solid var(--gold-light);
+            border-radius: 12px;
+            background: #fffef9;
+            cursor: crosshair;
+            width: 100%;
+            max-width: 280px;
+            height: 120px;
+        }
+        .signature-actions {
+            display: flex;
+            gap: 10px;
         }
         .blessings-list {
             max-height: 200px;
@@ -411,6 +448,19 @@
             text-align: left;
             font-size: 15px;
             border-left: 3px solid var(--gold-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .blessing-content {
+            flex: 1;
+        }
+        .blessing-signature {
+            width: 60px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
         }
         .blessing-card .author {
             font-family: 'Montserrat', sans-serif;
@@ -421,7 +471,22 @@
             margin-top: 4px;
         }
 
-        /* Keep existing styles (countdown, details, godparents, rsvp, etc.) */
+        /* Floating lanterns */
+        .floating-lantern {
+            position: fixed;
+            bottom: -100px;
+            z-index: 800;
+            font-size: 30px;
+            pointer-events: none;
+            animation: riseLantern 6s linear forwards;
+            opacity: 0.9;
+        }
+        @keyframes riseLantern {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-120vh) scale(0.5); opacity: 0; }
+        }
+
+        /* Keep other styles (countdown, details, etc.) */
         .countdown-card, .details-card, .godparents-card, .rsvp-card, .calendar-link-card, .footer-text {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -438,8 +503,7 @@
         .countdown-card { padding: 28px 24px; text-align: center; }
         .countdown-title { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 10px; color: var(--text-lighter); margin-bottom: 16px; }
         .countdown-grid { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
-        .countdown-item { background: var(--cream); border-radius: var(--border-radius-sm); padding: 14px 16px; min-width: 64px; text-align: center; transition: var(--transition); }
-        .countdown-item:hover { background: var(--cream-dark); transform: translateY(-2px); }
+        .countdown-item { background: var(--cream); border-radius: var(--border-radius-sm); padding: 14px 16px; min-width: 64px; text-align: center; }
         .countdown-number { font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 600; color: var(--gold-dark); }
         .countdown-label { font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 2px; color: var(--text-lighter); margin-top: 6px; }
         .details-card { padding: 36px 32px; display: flex; flex-direction: column; gap: 22px; }
@@ -457,7 +521,7 @@
         .rsvp-card { padding: 32px; text-align: center; }
         .rsvp-card h4 { font-family: 'Montserrat', sans-serif; letter-spacing: 3px; font-size: 11px; color: var(--text-lighter); margin-bottom: 20px; }
         .rsvp-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-        .btn-rsvp { font-family: 'Montserrat', sans-serif; font-size: 13px; letter-spacing: 2px; padding: 14px 32px; border-radius: 50px; cursor: pointer; border: 2px solid var(--gold); transition: var(--transition); background: transparent; color: var(--gold-dark); }
+        .btn-rsvp { font-family: 'Montserrat', sans-serif; font-size: 13px; letter-spacing: 2px; padding: 14px 32px; border-radius: 50px; cursor: pointer; border: 2px solid var(--gold); background: transparent; color: var(--gold-dark); transition: var(--transition); }
         .btn-rsvp.accept { background: var(--gold); color: white; border-color: var(--gold); }
         .btn-rsvp.accept:hover { background: var(--gold-dark); }
         .btn-rsvp.decline:hover { background: #fdf2f2; border-color: #d4a0a0; color: #a06060; }
@@ -469,25 +533,16 @@
         .footer-text { text-align: center; font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--text-lighter); opacity: 0.7; margin-top: 8px; background: transparent; box-shadow: none; }
         .heart { color: #d4a0a0; display: inline-block; animation: gentlePulse 2s infinite; }
 
-        /* Confetti */
-        .confetti-piece {
-            position: fixed; pointer-events: none; z-index: 999;
-            animation: confettiFall 1.8s ease-out forwards; opacity: 0;
-        }
+        .confetti-piece { position: fixed; pointer-events: none; z-index: 999; animation: confettiFall 1.8s ease-out forwards; opacity: 0; }
         @keyframes confettiFall {
             0% { opacity: 1; transform: translateY(-120px) rotate(0deg) scale(1); }
-            20% { opacity: 1; transform: translateY(10px) rotate(90deg) scale(1.2); }
-            60% { opacity: 0.8; transform: translateY(300px) rotate(300deg) scale(0.8); }
             100% { opacity: 0; transform: translateY(600px) rotate(720deg) scale(0.3); }
         }
     </style>
 </head>
 <body>
-
-    <!-- Floating particles canvas -->
     <canvas id="particlesCanvas"></canvas>
 
-    <!-- Envelope Overlay -->
     <div class="envelope-overlay" id="envelopeOverlay">
         <div class="envelope-container">
             <div class="envelope-icon">✉️</div>
@@ -495,22 +550,22 @@
         </div>
     </div>
 
-    <!-- Music Toggle Button -->
-    <div class="music-toggle" id="musicToggle" title="Toggle ambient music">🎵</div>
+    <div class="music-toggle" id="musicToggle">🎵</div>
 
-    <!-- Main wrapper -->
+    <!-- Photo lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23f5ecd7' stroke='%23c9a96e' stroke-width='3'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%233d332b'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%233d332b'/%3E%3Cpath d='M40 55 Q50 65 60 55' stroke='%233d332b' stroke-width='3' fill='none'/%3E%3C/svg%3E" alt="Baby Gio Railey" id="lightboxImg">
+    </div>
+
     <div class="main-wrapper" id="mainWrapper" style="display: none;">
-
-        <!-- HERO CARD (with baby photo and 3D tilt) -->
+        <!-- HERO CARD -->
         <div class="hero-card" id="heroCard">
-            <span class="cross-icon">✝</span>
-            
-            <!-- Baby Photo (replace src with your own image URL) -->
+            <span class="cross-icon" id="crossIcon">✝</span>
             <div class="baby-photo-container">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23f5ecd7' stroke='%23c9a96e' stroke-width='3'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%233d332b'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%233d332b'/%3E%3Cpath d='M40 55 Q50 65 60 55' stroke='%233d332b' stroke-width='3' fill='none'/%3E%3C/svg%3E" alt="Baby Gio Railey" class="baby-photo">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23f5ecd7' stroke='%23c9a96e' stroke-width='3'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%233d332b'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%233d332b'/%3E%3Cpath d='M40 55 Q50 65 60 55' stroke='%233d332b' stroke-width='3' fill='none'/%3E%3C/svg%3E" alt="Baby Gio Railey" class="baby-photo" id="babyPhoto">
             </div>
-
-            <div class="flourish-top" style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:18px;">
+            <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:18px;">
                 <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
                 <span style="width:8px; height:8px; background:var(--gold); transform:rotate(45deg); opacity:0.7; border-radius:1px;"></span>
                 <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
@@ -535,47 +590,59 @@
             </div>
         </div>
 
-        <!-- EVENT DETAILS -->
+        <!-- DETAILS -->
         <div class="details-card">
             <div class="detail-row"><div class="detail-icon">📅</div><div class="detail-content"><h4>Date</h4><p>Saturday, June 20, 2026</p><p class="sub-text">7:30 in the morning</p></div></div>
             <div class="detail-row"><div class="detail-icon">⛪</div><div class="detail-content"><h4>Church</h4><p>Saint Augustine Parish</p><p class="sub-text">WCMV+5QC, Rizal, Tagudin, 2714 Ilocos Sur</p><a href="https://maps.app.goo.gl/4SEcjSg3PmUcZDX2A" target="_blank" class="map-link">View on Map →</a></div></div>
         </div>
 
-        <!-- GODPARENTS MESSAGE -->
+        <!-- GODPARENTS -->
         <div class="godparents-card">
             <span class="godparents-badge">Ninang &amp; Ninong</span>
             <h3>You Are Chosen<br>with Love &amp; Faith</h3>
             <p>As <span class="highlight">godparents</span>, you hold a special place in our son's life — guiding him in faith, surrounding him with love, and being a light on his spiritual journey.</p>
         </div>
 
-        <!-- LIGHT A PRAYER CANDLE -->
+        <!-- CANDLES with name prompt -->
         <div class="candle-section" id="candleSection">
             <p class="candle-title">🕯️ Light a Prayer Candle for Gio Railey</p>
             <div class="candles-row" id="candlesContainer"></div>
         </div>
 
-        <!-- BLESSING WALL -->
+        <!-- BLESSING WALL + SIGNATURE PAD -->
         <div class="blessing-section" id="blessingSection">
-            <p class="blessing-title">💬 Leave a Blessing</p>
+            <p class="blessing-title">💬 Leave a Blessing &amp; Sign</p>
             <div class="blessing-form">
                 <input type="text" id="blessingName" placeholder="Your name" maxlength="30">
                 <textarea id="blessingMessage" rows="2" placeholder="Write a short prayer or message..." maxlength="150"></textarea>
+                <div class="signature-pad-container">
+                    <canvas id="signatureCanvas" class="signature-canvas"></canvas>
+                    <div class="signature-actions">
+                        <button id="clearSignature">Clear</button>
+                    </div>
+                </div>
                 <button id="submitBlessing">Share Blessing</button>
             </div>
             <div class="blessings-list" id="blessingsList"></div>
+        </div>
+
+        <!-- FLOATING LANTERN -->
+        <div class="candle-section" style="margin-top: 0;">
+            <p class="candle-title">🏮 Release a Prayer Lantern</p>
+            <input type="text" id="lanternMessage" placeholder="Your prayer intention..." maxlength="60" style="font-family: 'Montserrat', sans-serif; padding: 10px; border-radius: 12px; border: 1px solid #e0d8cc; background: var(--cream); width: 70%; margin-bottom: 10px;">
+            <button id="releaseLantern" style="font-family: 'Montserrat', sans-serif; background: var(--gold); color: white; border: none; padding: 8px 22px; border-radius: 20px; font-size: 12px; letter-spacing: 1px; cursor: pointer;">Release Lantern</button>
         </div>
 
         <!-- RSVP -->
         <div class="rsvp-card">
             <h4>Will You Join Us?</h4>
             <div class="rsvp-buttons">
-                <button class="btn-rsvp accept" onclick="handleRSVP('accept')">✨ I Wouldn't Miss It</button>
-                <button class="btn-rsvp decline" onclick="handleRSVP('decline')">🙏 With You in Spirit</button>
+                <button class="btn-rsvp accept" id="btnAccept">✨ I Wouldn't Miss It</button>
+                <button class="btn-rsvp decline" id="btnDecline">🙏 With You in Spirit</button>
             </div>
             <div class="rsvp-confirmation" id="rsvp-confirmation"></div>
         </div>
 
-        <!-- ADD TO CALENDAR (updated for June 20, 2026, 7:30 AM) -->
         <div class="calendar-link-card">
             <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baptism+of+Gio+Railey&dates=20260619T233000Z/20260620T013000Z&details=Baptism+celebration+of+Gio+Railey,+son+of+Lee+Adonis+%26+Ghena+Clear&location=Saint+Augustine+Parish,+WCMV%2B5QC,+Rizal,+Tagudin,+2714+Ilocos+Sur" target="_blank" class="btn-calendar">📆 Add to Google Calendar</a>
         </div>
@@ -584,12 +651,32 @@
     </div>
 
     <script>
-        // ==================== ENVELOPE INTERACTION ====================
-        const envelopeOverlay = document.getElementById('envelopeOverlay');
-        const mainWrapper = document.getElementById('mainWrapper');
-        envelopeOverlay.addEventListener('click', () => {
-            envelopeOverlay.classList.add('hidden');
-            mainWrapper.style.display = 'flex';
+        // ---------- SOUND EFFECTS (Web Audio) ----------
+        function playChime(freq = 880, duration = 0.2, type = 'sine') {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {}
+        }
+        function playChimeSequence() {
+            playChime(660, 0.2);
+            setTimeout(() => playChime(880, 0.25), 150);
+            setTimeout(() => playChime(1100, 0.3), 300);
+        }
+
+        // ---------- ENVELOPE ----------
+        document.getElementById('envelopeOverlay').addEventListener('click', () => {
+            document.getElementById('envelopeOverlay').classList.add('hidden');
+            document.getElementById('mainWrapper').style.display = 'flex';
             setTimeout(() => {
                 document.querySelectorAll('.hero-card, .countdown-card, .details-card, .godparents-card, .candle-section, .blessing-section, .rsvp-card, .calendar-link-card, .footer-text')
                     .forEach(el => el.classList.add('visible'));
@@ -600,200 +687,231 @@
             }, 100);
         });
 
-        // ==================== AMBIENT MUSIC ====================
-        let audioCtx = null;
-        let oscillators = [];
-        let isPlaying = false;
-        const musicToggle = document.getElementById('musicToggle');
-
+        // ---------- AMBIENT MUSIC ----------
+        let audioCtx = null, oscillators = [], isPlaying = false;
+        document.getElementById('musicToggle').addEventListener('click', () => {
+            if (isPlaying) stopAmbient(); else startAmbient();
+        });
         function startAmbient() {
             if (isPlaying) return;
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const now = audioCtx.currentTime;
             const gainNode = audioCtx.createGain();
-            gainNode.gain.setValueAtTime(0.12, now);
+            gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
             gainNode.connect(audioCtx.destination);
-            const osc1 = audioCtx.createOscillator();
-            osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(220, now);
-            const osc2 = audioCtx.createOscillator();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(220 * 1.003, now);
-            osc1.connect(gainNode);
-            osc2.connect(gainNode);
-            osc1.start();
-            osc2.start();
-            oscillators = [osc1, osc2];
-            isPlaying = true;
-            musicToggle.textContent = '🔇';
+            const osc1 = audioCtx.createOscillator(); osc1.type = 'sine'; osc1.frequency.setValueAtTime(220, audioCtx.currentTime);
+            const osc2 = audioCtx.createOscillator(); osc2.type = 'sine'; osc2.frequency.setValueAtTime(220*1.003, audioCtx.currentTime);
+            osc1.connect(gainNode); osc2.connect(gainNode);
+            osc1.start(); osc2.start();
+            oscillators = [osc1, osc2]; isPlaying = true;
+            document.getElementById('musicToggle').textContent = '🔇';
         }
-
         function stopAmbient() {
             if (!isPlaying) return;
-            oscillators.forEach(o => o.stop());
-            oscillators = [];
-            if (audioCtx) audioCtx.close();
-            audioCtx = null;
-            isPlaying = false;
-            musicToggle.textContent = '🎵';
+            oscillators.forEach(o => o.stop()); oscillators = [];
+            if (audioCtx) audioCtx.close(); audioCtx = null; isPlaying = false;
+            document.getElementById('musicToggle').textContent = '🎵';
         }
 
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                stopAmbient();
-            } else {
-                startAmbient();
-            }
-        });
-
-        // ==================== COUNTDOWN (June 20, 2026, 7:30 AM) ====================
+        // ---------- COUNTDOWN June 20, 7:30 AM ----------
         const baptismDate = new Date('2026-06-20T07:30:00+08:00');
         function updateCountdown() {
-            const now = new Date();
-            const diff = baptismDate - now;
+            const diff = baptismDate - new Date();
             if (diff <= 0) {
-                document.getElementById('countdown-days').textContent = '00';
-                document.getElementById('countdown-hours').textContent = '00';
-                document.getElementById('countdown-minutes').textContent = '00';
-                document.getElementById('countdown-seconds').textContent = '00';
+                ['days','hours','minutes','seconds'].forEach(u => document.getElementById('countdown-'+u).textContent='00');
                 return;
             }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
-            document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
-            document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+            document.getElementById('countdown-days').textContent = String(Math.floor(diff/(1000*60*60*24))).padStart(2,'0');
+            document.getElementById('countdown-hours').textContent = String(Math.floor((diff%(1000*60*60*24))/(1000*60*60))).padStart(2,'0');
+            document.getElementById('countdown-minutes').textContent = String(Math.floor((diff%(1000*60*60))/(1000*60))).padStart(2,'0');
+            document.getElementById('countdown-seconds').textContent = String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
         }
 
-        // ==================== RSVP & CONFETTI ====================
+        // ---------- RSVP & CONFETTI ----------
+        document.getElementById('btnAccept').addEventListener('click', () => handleRSVP('accept'));
+        document.getElementById('btnDecline').addEventListener('click', () => handleRSVP('decline'));
         function handleRSVP(type) {
-            const confEl = document.getElementById('rsvp-confirmation');
+            const conf = document.getElementById('rsvp-confirmation');
             if (type === 'accept') {
-                confEl.textContent = '🌟 We are overjoyed! See you on June 20th!';
-                confEl.style.background = '#e8f5e9';
-                confEl.style.color = '#3d6b3d';
+                conf.textContent = '🌟 We are overjoyed! See you on June 20th!';
+                conf.style.background = '#e8f5e9'; conf.style.color = '#3d6b3d';
                 spawnConfetti();
+                playChimeSequence();
             } else {
-                confEl.textContent = '🙏 Your prayers mean everything. Thank you.';
-                confEl.style.background = '#fdf2f2';
-                confEl.style.color = '#7a5050';
+                conf.textContent = '🙏 Your prayers mean everything. Thank you.';
+                conf.style.background = '#fdf2f2'; conf.style.color = '#7a5050';
+                playChime(440, 0.3, 'triangle');
             }
-            confEl.classList.add('show');
-            document.querySelectorAll('.btn-rsvp').forEach(b => b.style.pointerEvents = 'none');
+            conf.classList.add('show');
+            document.getElementById('btnAccept').style.pointerEvents = 'none';
+            document.getElementById('btnDecline').style.pointerEvents = 'none';
         }
-
         function spawnConfetti() {
             const colors = ['#c9a96e','#dcc89b','#e8d5b7','#f2e4df','#b7c9b1','#dce8d7'];
             for (let i=0; i<50; i++) {
                 setTimeout(() => {
-                    const piece = document.createElement('div');
-                    piece.className = 'confetti-piece';
-                    piece.style.width = (Math.random()*10+6)+'px';
-                    piece.style.height = (Math.random()*10+6)+'px';
-                    piece.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
-                    piece.style.left = Math.random()*100+'%';
-                    piece.style.top = -(Math.random()*40+10)+'px';
-                    document.body.appendChild(piece);
-                    setTimeout(() => piece.remove(), 2000);
+                    const p = document.createElement('div');
+                    p.className = 'confetti-piece';
+                    p.style.width = p.style.height = (Math.random()*10+6)+'px';
+                    p.style.backgroundColor = colors[Math.floor(Math.random()*colors.length)];
+                    p.style.left = Math.random()*100+'%';
+                    p.style.top = -(Math.random()*40+10)+'px';
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 2000);
                 }, i*18);
             }
         }
 
-        // ==================== PRAYER CANDLES ====================
-        const candlesContainer = document.getElementById('candlesContainer');
+        // ---------- CANDLES WITH NAME ----------
         const totalCandles = 7;
+        let candleData = new Array(totalCandles).fill(null);
         function initCandles() {
-            candlesContainer.innerHTML = '';
+            const container = document.getElementById('candlesContainer');
+            const saved = JSON.parse(localStorage.getItem('candleData') || '[]');
+            candleData = saved.length === totalCandles ? saved : new Array(totalCandles).fill(null);
+            container.innerHTML = '';
             for (let i = 0; i < totalCandles; i++) {
                 const candle = document.createElement('div');
                 candle.className = 'candle';
                 candle.dataset.index = i;
-                candle.innerHTML = `
-                    <div class="candle-flame"></div>
-                    <div class="candle-wick"></div>
-                    <div class="candle-body"></div>
-                `;
-                candle.addEventListener('click', () => toggleCandle(i, candle));
-                candlesContainer.appendChild(candle);
+                if (candleData[i]) {
+                    candle.classList.add('lit');
+                    candle.setAttribute('data-tooltip', candleData[i]);
+                }
+                candle.innerHTML = '<div class="candle-flame"></div><div class="candle-wick"></div><div class="candle-body"></div>';
+                candle.addEventListener('click', () => lightCandle(i, candle));
+                container.appendChild(candle);
             }
-            const saved = JSON.parse(localStorage.getItem('litCandles') || '[]');
-            saved.forEach(index => {
-                const candle = candlesContainer.children[index];
-                if (candle) candle.classList.add('lit');
-            });
+        }
+        function lightCandle(index, element) {
+            if (candleData[index]) return;
+            const name = prompt('Enter your name to light this candle:');
+            if (!name) return;
+            candleData[index] = name;
+            element.classList.add('lit');
+            element.setAttribute('data-tooltip', name);
+            localStorage.setItem('candleData', JSON.stringify(candleData));
+            playChime(1200, 0.3);
         }
 
-        function toggleCandle(index, element) {
-            element.classList.toggle('lit');
-            const saved = JSON.parse(localStorage.getItem('litCandles') || '[]');
-            if (element.classList.contains('lit')) {
-                if (!saved.includes(index)) saved.push(index);
-            } else {
-                const idx = saved.indexOf(index);
-                if (idx > -1) saved.splice(idx, 1);
-            }
-            localStorage.setItem('litCandles', JSON.stringify(saved));
+        // ---------- SIGNATURE PAD ----------
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false;
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        window.addEventListener('resize', () => {
+            const imgData = ctx.getImageData(0,0,canvas.width,canvas.height);
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.putImageData(imgData,0,0);
+        });
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => drawing = false);
+        canvas.addEventListener('mouseleave', () => drawing = false);
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e.touches[0]); });
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e.touches[0]); });
+        canvas.addEventListener('touchend', () => drawing = false);
+        function startDraw(e) {
+            drawing = true;
+            ctx.beginPath();
+            const rect = canvas.getBoundingClientRect();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
         }
+        function draw(e) {
+            if (!drawing) return;
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.strokeStyle = '#3d332b';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+        document.getElementById('clearSignature').addEventListener('click', () => {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+        });
 
-        // ==================== BLESSING WALL ====================
-        const blessingForm = document.getElementById('submitBlessing');
-        const blessingsList = document.getElementById('blessingsList');
-        blessingForm.addEventListener('click', addBlessing);
-
-        function addBlessing() {
+        // ---------- BLESSING WALL WITH SIGNATURE ----------
+        document.getElementById('submitBlessing').addEventListener('click', () => {
             const name = document.getElementById('blessingName').value.trim();
             const msg = document.getElementById('blessingMessage').value.trim();
             if (!msg) return;
+            const signatureData = canvas.toDataURL();
             const blessings = JSON.parse(localStorage.getItem('blessings') || '[]');
-            blessings.push({ name: name || 'Anonymous', message: msg, time: Date.now() });
+            blessings.push({ name: name || 'Anonymous', message: msg, signature: signatureData });
             localStorage.setItem('blessings', JSON.stringify(blessings));
             document.getElementById('blessingName').value = '';
             document.getElementById('blessingMessage').value = '';
+            ctx.clearRect(0,0,canvas.width,canvas.height);
             renderBlessings(blessings);
-        }
+            playChimeSequence();
+        });
 
         function loadBlessings() {
-            const blessings = JSON.parse(localStorage.getItem('blessings') || '[]');
-            renderBlessings(blessings);
+            renderBlessings(JSON.parse(localStorage.getItem('blessings') || '[]'));
         }
 
         function renderBlessings(blessings) {
-            blessingsList.innerHTML = blessings.map(b => `
+            const list = document.getElementById('blessingsList');
+            list.innerHTML = blessings.map(b => `
                 <div class="blessing-card">
-                    <div>“${b.message}”</div>
-                    <div class="author">— ${b.name}</div>
+                    <div class="blessing-content">
+                        <div>“${b.message}”</div>
+                        <div class="author">— ${b.name}</div>
+                    </div>
+                    ${b.signature && b.signature !== 'data:,' ? `<img src="${b.signature}" class="blessing-signature" alt="signature">` : ''}
                 </div>
             `).join('');
         }
 
-        // ==================== 3D TILT ON HERO CARD ====================
+        // ---------- FLOATING LANTERNS ----------
+        document.getElementById('releaseLantern').addEventListener('click', () => {
+            const msg = document.getElementById('lanternMessage').value.trim();
+            if (!msg) return;
+            const lantern = document.createElement('div');
+            lantern.className = 'floating-lantern';
+            lantern.textContent = '🏮 ' + msg;
+            lantern.style.left = Math.random() * 80 + 10 + '%';
+            document.body.appendChild(lantern);
+            document.getElementById('lanternMessage').value = '';
+            playChime(1000, 0.2);
+            setTimeout(() => lantern.remove(), 6000);
+        });
+
+        // ---------- PHOTO LIGHTBOX ----------
+        document.getElementById('babyPhoto').addEventListener('click', () => {
+            document.getElementById('lightbox').classList.add('active');
+        });
+        document.getElementById('lightboxClose').addEventListener('click', () => {
+            document.getElementById('lightbox').classList.remove('active');
+        });
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('active');
+        });
+
+        // ---------- 3D TILT ----------
         const heroCard = document.getElementById('heroCard');
         heroCard.addEventListener('mousemove', (e) => {
             const rect = heroCard.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -4;
-            const rotateY = ((x - centerX) / centerX) * 4;
-            heroCard.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            heroCard.style.boxShadow = '0 12px 36px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.05)';
+            const x = e.clientX - rect.left, y = e.clientY - rect.top;
+            const rx = ((y - rect.height/2) / (rect.height/2)) * -4;
+            const ry = ((x - rect.width/2) / (rect.width/2)) * 4;
+            heroCard.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
         });
         heroCard.addEventListener('mouseleave', () => {
             heroCard.style.transform = 'perspective(600px) rotateX(0) rotateY(0)';
-            heroCard.style.boxShadow = '0 4px 30px rgba(0,0,0,0.06), 0 1px 8px rgba(0,0,0,0.04)';
         });
 
-        // ==================== FLOATING PARTICLES ====================
-        const canvas = document.getElementById('particlesCanvas');
-        const ctx = canvas.getContext('2d');
+        // ---------- PARTICLES (with mouse attraction) ----------
+        const particlesCanvas = document.getElementById('particlesCanvas');
+        const pCtx = particlesCanvas.getContext('2d');
         let particles = [];
+        let mouse = { x: null, y: null };
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
         function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = document.documentElement.scrollHeight;
+            particlesCanvas.width = window.innerWidth;
+            particlesCanvas.height = document.documentElement.scrollHeight;
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
@@ -801,39 +919,53 @@
         class Particle {
             constructor() { this.reset(true); }
             reset(initial) {
-                this.x = Math.random() * canvas.width;
-                this.y = initial ? Math.random() * canvas.height : canvas.height + 30;
+                this.x = Math.random() * particlesCanvas.width;
+                this.y = initial ? Math.random() * particlesCanvas.height : particlesCanvas.height + 30;
                 this.size = Math.random() * 2.2 + 0.6;
                 this.speedY = -(Math.random() * 0.28 + 0.08);
                 this.speedX = (Math.random() - 0.5) * 0.2;
                 this.opacity = Math.random() * 0.4 + 0.12;
-                this.twinkleSpeed = Math.random() * 0.01 + 0.005;
                 this.twinkleOffset = Math.random() * Math.PI * 2;
             }
             update() {
+                // gentle attraction toward mouse
+                if (mouse.x && mouse.y) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const dist = Math.sqrt(dx*dx+dy*dy);
+                    if (dist < 150) {
+                        this.x += dx * 0.005;
+                        this.y += dy * 0.005;
+                    }
+                }
                 this.y += this.speedY;
                 this.x += this.speedX;
-                if (this.x < -10) this.x = canvas.width + 10;
-                if (this.x > canvas.width + 10) this.x = -10;
-                if (this.y < -20) { this.y = canvas.height + 20; this.x = Math.random() * canvas.width; }
-                if (this.y > canvas.height + 30) { this.y = -20; }
+                if (this.x < -10) this.x = particlesCanvas.width + 10;
+                if (this.x > particlesCanvas.width + 10) this.x = -10;
+                if (this.y < -20) { this.y = particlesCanvas.height + 20; this.x = Math.random()*particlesCanvas.width; }
+                if (this.y > particlesCanvas.height + 30) this.y = -20;
             }
             draw(ctx) {
                 const twinkle = Math.sin(this.twinkleOffset) * 0.3 + 0.7;
-                const alpha = this.opacity * twinkle;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-                ctx.fillStyle = `rgba(220, 200, 150, ${alpha})`;
+                ctx.fillStyle = `rgba(220,200,150,${this.opacity*twinkle})`;
                 ctx.fill();
             }
         }
-        for (let i=0; i<40; i++) particles.push(new Particle());
+        for (let i=0; i<45; i++) particles.push(new Particle());
         function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(ctx); });
+            pCtx.clearRect(0,0,particlesCanvas.width, particlesCanvas.height);
+            particles.forEach(p => { p.update(); p.draw(pCtx); });
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
+
+        // Cross icon hidden message
+        document.getElementById('crossIcon').addEventListener('click', () => {
+            alert('“Let the little children come to me.” – Matthew 19:14');
+            playChime(1500, 0.4);
+        });
     </script>
 </body>
 </html>
