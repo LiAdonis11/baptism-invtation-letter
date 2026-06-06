@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baptism Invitation – Mateo | June 13, 2026</title>
+    <title>Baptism Invitation – Gio Railey | June 20, 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -54,7 +54,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Canvas for floating particles */
         #particlesCanvas {
             position: fixed;
             top: 0;
@@ -65,7 +64,6 @@
             z-index: 0;
         }
 
-        /* Main container */
         .main-wrapper {
             position: relative;
             z-index: 1;
@@ -220,6 +218,25 @@
         @keyframes gentlePulse {
             0%, 100% { transform: scale(1); opacity: 0.85; }
             50% { transform: scale(1.08); opacity: 1; }
+        }
+
+        /* Baby photo */
+        .baby-photo-container {
+            display: flex;
+            justify-content: center;
+            margin: 18px 0 14px;
+        }
+        .baby-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gold-light);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .baby-photo:hover {
+            transform: scale(1.05);
         }
 
         .label-baptism {
@@ -484,16 +501,21 @@
     <!-- Main wrapper -->
     <div class="main-wrapper" id="mainWrapper" style="display: none;">
 
-        <!-- HERO CARD (3D tilt applied via JS) -->
+        <!-- HERO CARD (with baby photo and 3D tilt) -->
         <div class="hero-card" id="heroCard">
             <span class="cross-icon">✝</span>
+            
+            <!-- Baby Photo (replace src with your own image URL) -->
+            <div class="baby-photo-container">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='40' r='30' fill='%23f5ecd7' stroke='%23c9a96e' stroke-width='3'/%3E%3Ccircle cx='35' cy='35' r='4' fill='%233d332b'/%3E%3Ccircle cx='65' cy='35' r='4' fill='%233d332b'/%3E%3Cpath d='M40 55 Q50 65 60 55' stroke='%233d332b' stroke-width='3' fill='none'/%3E%3C/svg%3E" alt="Baby Gio Railey" class="baby-photo">
+            </div>
+
             <div class="flourish-top" style="display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:18px;">
                 <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
                 <span style="width:8px; height:8px; background:var(--gold); transform:rotate(45deg); opacity:0.7; border-radius:1px;"></span>
                 <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
             </div>
             <p class="label-baptism">Holy Baptism</p>
-            <!-- ✨ CUSTOMIZE: Baby's name -->
             <h1 class="baby-name">Gio Railey</h1>
             <p class="baby-name-sub">Son of Lee Adonis &amp; Ghena Clear</p>
             <p style="font-size:20px; line-height:1.6;">
@@ -515,9 +537,8 @@
 
         <!-- EVENT DETAILS -->
         <div class="details-card">
-            <div class="detail-row"><div class="detail-icon">📅</div><div class="detail-content"><h4>Date</h4><p>Saturday, June 13, 2026</p><p class="sub-text">8:00 in the morning</p></div></div>
+            <div class="detail-row"><div class="detail-icon">📅</div><div class="detail-content"><h4>Date</h4><p>Saturday, June 20, 2026</p><p class="sub-text">7:30 in the morning</p></div></div>
             <div class="detail-row"><div class="detail-icon">⛪</div><div class="detail-content"><h4>Church</h4><p>Saint Augustine Parish</p><p class="sub-text">WCMV+5QC, Rizal, Tagudin, 2714 Ilocos Sur</p><a href="https://maps.app.goo.gl/4SEcjSg3PmUcZDX2A" target="_blank" class="map-link">View on Map →</a></div></div>
-            <!-- <div class="detail-row"><div class="detail-icon">🍽️</div><div class="detail-content"><h4>Reception</h4><p>The Garden Hall</p><p class="sub-text">Immediately following the ceremony</p><a href="https://maps.google.com/?q=The+Garden+Hall+Quezon+City" target="_blank" class="map-link">View on Map →</a></div></div> -->
         </div>
 
         <!-- GODPARENTS MESSAGE -->
@@ -554,9 +575,9 @@
             <div class="rsvp-confirmation" id="rsvp-confirmation"></div>
         </div>
 
-        <!-- ADD TO CALENDAR -->
+        <!-- ADD TO CALENDAR (updated for June 20, 2026, 7:30 AM) -->
         <div class="calendar-link-card">
-            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baptism+of+Mateo&dates=20260613T020000Z/20260613T040000Z&details=Baptism+celebration+of+Mateo,+son+of+Michael+%26+Isabella&location=St.+Joseph+the+Worker+Parish,+Quezon+City" target="_blank" class="btn-calendar">📆 Add to Google Calendar</a>
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Baptism+of+Gio+Railey&dates=20260619T233000Z/20260620T013000Z&details=Baptism+celebration+of+Gio+Railey,+son+of+Lee+Adonis+%26+Ghena+Clear&location=Saint+Augustine+Parish,+WCMV%2B5QC,+Rizal,+Tagudin,+2714+Ilocos+Sur" target="_blank" class="btn-calendar">📆 Add to Google Calendar</a>
         </div>
 
         <p class="footer-text">With grateful hearts, <span class="heart">♥</span> Lee Adonis &amp; Ghena Clear</p>
@@ -569,7 +590,6 @@
         envelopeOverlay.addEventListener('click', () => {
             envelopeOverlay.classList.add('hidden');
             mainWrapper.style.display = 'flex';
-            // Trigger visible animations after a tiny delay
             setTimeout(() => {
                 document.querySelectorAll('.hero-card, .countdown-card, .details-card, .godparents-card, .candle-section, .blessing-section, .rsvp-card, .calendar-link-card, .footer-text')
                     .forEach(el => el.classList.add('visible'));
@@ -580,7 +600,7 @@
             }, 100);
         });
 
-        // ==================== AMBIENT MUSIC (Web Audio API) ====================
+        // ==================== AMBIENT MUSIC ====================
         let audioCtx = null;
         let oscillators = [];
         let isPlaying = false;
@@ -590,20 +610,15 @@
             if (isPlaying) return;
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const now = audioCtx.currentTime;
-
-            // Soft organ-like pad using two detuned oscillators
-            const freq = 220; // A3
             const gainNode = audioCtx.createGain();
             gainNode.gain.setValueAtTime(0.12, now);
             gainNode.connect(audioCtx.destination);
-
             const osc1 = audioCtx.createOscillator();
             osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(freq, now);
+            osc1.frequency.setValueAtTime(220, now);
             const osc2 = audioCtx.createOscillator();
             osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(freq * 1.003, now); // slight detune
-
+            osc2.frequency.setValueAtTime(220 * 1.003, now);
             osc1.connect(gainNode);
             osc2.connect(gainNode);
             osc1.start();
@@ -631,8 +646,8 @@
             }
         });
 
-        // ==================== COUNTDOWN ====================
-        const baptismDate = new Date('2026-06-13T10:00:00+08:00');
+        // ==================== COUNTDOWN (June 20, 2026, 7:30 AM) ====================
+        const baptismDate = new Date('2026-06-20T07:30:00+08:00');
         function updateCountdown() {
             const now = new Date();
             const diff = baptismDate - now;
@@ -657,7 +672,7 @@
         function handleRSVP(type) {
             const confEl = document.getElementById('rsvp-confirmation');
             if (type === 'accept') {
-                confEl.textContent = '🌟 We are overjoyed! See you on June 13th!';
+                confEl.textContent = '🌟 We are overjoyed! See you on June 20th!';
                 confEl.style.background = '#e8f5e9';
                 confEl.style.color = '#3d6b3d';
                 spawnConfetti();
@@ -704,7 +719,6 @@
                 candle.addEventListener('click', () => toggleCandle(i, candle));
                 candlesContainer.appendChild(candle);
             }
-            // load lit state from localStorage
             const saved = JSON.parse(localStorage.getItem('litCandles') || '[]');
             saved.forEach(index => {
                 const candle = candlesContainer.children[index];
@@ -763,7 +777,7 @@
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -4; // max 4deg
+            const rotateX = ((y - centerY) / centerY) * -4;
             const rotateY = ((x - centerX) / centerX) * 4;
             heroCard.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             heroCard.style.boxShadow = '0 12px 36px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.05)';
