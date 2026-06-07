@@ -271,7 +271,8 @@
             cursor: pointer;
         }
 
-        /* Candle section */
+        /* ===== CANDLE & BLESSING STYLES COMMENTED OUT ===== */
+        /*
         .candle-section {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -358,8 +359,6 @@
             z-index: 5;
             font-family: 'Montserrat', sans-serif;
         }
-
-        /* Blessing section (no signature pad) */
         .blessing-section {
             background: var(--white);
             border-radius: var(--border-radius);
@@ -438,6 +437,7 @@
             color: var(--gold-dark);
             margin-top: 4px;
         }
+        */
 
         /* Floating lanterns */
         .floating-lantern {
@@ -557,7 +557,7 @@
             </div>
         </div>
 
-        <!-- EVENT DETAILS (with simple gathering after ceremony) -->
+        <!-- EVENT DETAILS -->
         <div class="details-card">
             <div class="detail-row">
                 <div class="detail-icon">📅</div>
@@ -576,7 +576,6 @@
                     <a href="https://maps.app.goo.gl/4SEcjSg3PmUcZDX2A" target="_blank" class="map-link">View on Map →</a>
                 </div>
             </div>
-            <!-- Simple reception / fellowship (no label "Reception") -->
             <div class="detail-row">
                 <div class="detail-icon">🥘</div>
                 <div class="detail-content">
@@ -595,13 +594,16 @@
             <p>As <span class="highlight">godparents</span>, you hold a special place in our son's life — guiding him in faith, surrounding him with love, and being a light on his spiritual journey.</p>
         </div>
 
-        <!-- CANDLES with name prompt -->
+        <!-- ===== CANDLE SECTION COMMENTED OUT ===== -->
+        <!--
         <div class="candle-section" id="candleSection">
             <p class="candle-title">🕯️ Light a Prayer Candle for Gio Railey</p>
             <div class="candles-row" id="candlesContainer"></div>
         </div>
+        -->
 
-        <!-- BLESSING WALL (no signature pad) -->
+        <!-- ===== BLESSING WALL COMMENTED OUT ===== -->
+        <!--
         <div class="blessing-section" id="blessingSection">
             <p class="blessing-title">💬 Leave a Blessing</p>
             <div class="blessing-form">
@@ -611,6 +613,7 @@
             </div>
             <div class="blessings-list" id="blessingsList"></div>
         </div>
+        -->
 
         <!-- FLOATING LANTERN -->
         <div class="candle-section" style="margin-top: 0;">
@@ -664,10 +667,10 @@
             document.getElementById('envelopeOverlay').classList.add('hidden');
             document.getElementById('mainWrapper').style.display = 'flex';
             setTimeout(() => {
-                document.querySelectorAll('.hero-card, .countdown-card, .details-card, .godparents-card, .candle-section, .blessing-section, .rsvp-card, .calendar-link-card, .footer-text')
+                document.querySelectorAll('.hero-card, .countdown-card, .details-card, .godparents-card, .candle-section, .rsvp-card, .calendar-link-card, .footer-text')
                     .forEach(el => el.classList.add('visible'));
-                initCandles();
-                loadBlessings();
+                // initCandles();  // Commented out - candle section removed
+                // loadBlessings(); // Commented out - blessing section removed
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
             }, 100);
@@ -747,7 +750,8 @@
             }
         }
 
-        // ---------- CANDLES WITH NAME ----------
+        // ===== CANDLE & BLESSING JAVASCRIPT COMMENTED OUT =====
+        /*
         const totalCandles = 7;
         let candleData = new Array(totalCandles).fill(null);
         function initCandles() {
@@ -779,7 +783,6 @@
             playChime(1200, 0.3);
         }
 
-        // ---------- BLESSING WALL (no signature) ----------
         document.getElementById('submitBlessing').addEventListener('click', () => {
             const name = document.getElementById('blessingName').value.trim();
             const msg = document.getElementById('blessingMessage').value.trim();
@@ -806,6 +809,7 @@
                 </div>
             `).join('');
         }
+        */
 
         // ---------- FLOATING LANTERNS ----------
         document.getElementById('releaseLantern').addEventListener('click', () => {
@@ -905,7 +909,7 @@
 
         // Cross icon hidden scripture
         document.getElementById('crossIcon').addEventListener('click', () => {
-            alert('“Let the little children come to me.” – Matthew 19:14');
+            alert('"Let the little children come to me." – Matthew 19:14');
             playChime(1500, 0.4);
         });
     </script>
