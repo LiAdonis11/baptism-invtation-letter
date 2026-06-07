@@ -271,9 +271,8 @@
             cursor: pointer;
         }
 
-        /* ===== CANDLE & BLESSING STYLES COMMENTED OUT ===== */
-        /*
-        .candle-section {
+        /* Lantern section */
+        .lantern-section {
             background: var(--white);
             border-radius: var(--border-radius);
             padding: 30px 24px;
@@ -283,161 +282,47 @@
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s, transform 0.8s;
-        }
-        .candle-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .candle-title {
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 11px;
-            color: var(--text-lighter);
-            margin-bottom: 18px;
-        }
-        .candles-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .candle {
-            width: 30px;
-            height: 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            cursor: pointer;
-            position: relative;
         }
-        .candle-body {
-            width: 16px;
-            height: 34px;
-            background: #f5ecd7;
-            border-radius: 8px 8px 4px 4px;
-            border: 1px solid #dcc89b;
-            box-shadow: inset 0 -4px 4px rgba(0,0,0,0.04);
-        }
-        .candle-wick {
-            width: 2px;
-            height: 6px;
-            background: #4a3b2f;
-            margin-bottom: -2px;
-        }
-        .candle-flame {
-            width: 12px;
-            height: 18px;
-            background: radial-gradient(circle at 50% 20%, #fff3b0, #f5a623);
-            border-radius: 50% 50% 20% 20%;
-            position: absolute;
-            top: -22px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            animation: flicker 0.8s ease-in-out infinite alternate;
-            box-shadow: 0 0 12px #f9d56e;
-        }
-        .candle.lit .candle-flame {
-            opacity: 1;
-        }
-        @keyframes flicker {
-            0% { transform: translateX(-50%) scale(1, 1) rotate(-1deg); }
-            100% { transform: translateX(-50%) scale(1.08, 0.95) rotate(2deg); }
-        }
-        .candle:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 65px;
-            background: #3d332b;
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            white-space: nowrap;
-            z-index: 5;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .blessing-section {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 30px 24px;
-            width: 100%;
-            box-shadow: var(--card-shadow);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s, transform 0.8s;
-        }
-        .blessing-section.visible {
+        .lantern-section.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        .blessing-title {
+        .lantern-title {
             font-family: 'Montserrat', sans-serif;
             text-transform: uppercase;
             letter-spacing: 3px;
             font-size: 11px;
             color: var(--text-lighter);
-            margin-bottom: 14px;
-            text-align: center;
-        }
-        .blessing-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
             margin-bottom: 18px;
         }
-        .blessing-form input, .blessing-form textarea {
+        .lantern-input {
             font-family: 'Montserrat', sans-serif;
             padding: 10px 14px;
-            border: 1px solid #e0d8cc;
             border-radius: 12px;
+            border: 1px solid #e0d8cc;
             background: var(--cream);
-            font-size: 13px;
-            resize: vertical;
+            width: 70%;
+            margin-bottom: 10px;
+            text-align: center;
         }
-        .blessing-form button {
-            align-self: flex-end;
+        .lantern-button {
             font-family: 'Montserrat', sans-serif;
             background: var(--gold);
             color: white;
             border: none;
-            padding: 8px 22px;
+            padding: 10px 24px;
             border-radius: 20px;
             font-size: 12px;
             letter-spacing: 1px;
             cursor: pointer;
             transition: background 0.3s;
         }
-        .blessing-form button:hover {
+        .lantern-button:hover {
             background: var(--gold-dark);
         }
-        .blessings-list {
-            max-height: 200px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 4px;
-        }
-        .blessing-card {
-            background: var(--cream);
-            padding: 12px 14px;
-            border-radius: 12px;
-            text-align: left;
-            font-size: 15px;
-            border-left: 3px solid var(--gold-light);
-        }
-        .blessing-card .author {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gold-dark);
-            margin-top: 4px;
-        }
-        */
 
         /* Floating lanterns */
         .floating-lantern {
@@ -615,11 +500,11 @@
         </div>
         -->
 
-        <!-- FLOATING LANTERN -->
-        <div class="candle-section" style="margin-top: 0;">
-            <p class="candle-title">🏮 Release a Prayer Lantern</p>
-            <input type="text" id="lanternMessage" placeholder="Your prayer intention..." maxlength="60" style="font-family: 'Montserrat', sans-serif; padding: 10px; border-radius: 12px; border: 1px solid #e0d8cc; background: var(--cream); width: 70%; margin-bottom: 10px;">
-            <button id="releaseLantern" style="font-family: 'Montserrat', sans-serif; background: var(--gold); color: white; border: none; padding: 8px 22px; border-radius: 20px; font-size: 12px; letter-spacing: 1px; cursor: pointer;">Release Lantern</button>
+        <!-- FLOATING LANTERN (properly centered) -->
+        <div class="lantern-section" id="lanternSection">
+            <p class="lantern-title">🏮 Release a Prayer Lantern</p>
+            <input type="text" id="lanternMessage" placeholder="Your prayer intention..." maxlength="60" class="lantern-input">
+            <button id="releaseLantern" class="lantern-button">Release Lantern</button>
         </div>
 
         <!-- RSVP -->
@@ -667,10 +552,8 @@
             document.getElementById('envelopeOverlay').classList.add('hidden');
             document.getElementById('mainWrapper').style.display = 'flex';
             setTimeout(() => {
-                document.querySelectorAll('.hero-card, .countdown-card, .details-card, .godparents-card, .candle-section, .rsvp-card, .calendar-link-card, .footer-text')
+                document.querySelectorAll('.hero-card, .countdown-card, .details-card, .godparents-card, .lantern-section, .rsvp-card, .calendar-link-card, .footer-text')
                     .forEach(el => el.classList.add('visible'));
-                // initCandles();  // Commented out - candle section removed
-                // loadBlessings(); // Commented out - blessing section removed
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
             }, 100);
@@ -749,67 +632,6 @@
                 }, i*18);
             }
         }
-
-        // ===== CANDLE & BLESSING JAVASCRIPT COMMENTED OUT =====
-        /*
-        const totalCandles = 7;
-        let candleData = new Array(totalCandles).fill(null);
-        function initCandles() {
-            const container = document.getElementById('candlesContainer');
-            const saved = JSON.parse(localStorage.getItem('candleData') || '[]');
-            candleData = saved.length === totalCandles ? saved : new Array(totalCandles).fill(null);
-            container.innerHTML = '';
-            for (let i = 0; i < totalCandles; i++) {
-                const candle = document.createElement('div');
-                candle.className = 'candle';
-                candle.dataset.index = i;
-                if (candleData[i]) {
-                    candle.classList.add('lit');
-                    candle.setAttribute('data-tooltip', candleData[i]);
-                }
-                candle.innerHTML = '<div class="candle-flame"></div><div class="candle-wick"></div><div class="candle-body"></div>';
-                candle.addEventListener('click', () => lightCandle(i, candle));
-                container.appendChild(candle);
-            }
-        }
-        function lightCandle(index, element) {
-            if (candleData[index]) return;
-            const name = prompt('Enter your name to light this candle:');
-            if (!name) return;
-            candleData[index] = name;
-            element.classList.add('lit');
-            element.setAttribute('data-tooltip', name);
-            localStorage.setItem('candleData', JSON.stringify(candleData));
-            playChime(1200, 0.3);
-        }
-
-        document.getElementById('submitBlessing').addEventListener('click', () => {
-            const name = document.getElementById('blessingName').value.trim();
-            const msg = document.getElementById('blessingMessage').value.trim();
-            if (!msg) return;
-            const blessings = JSON.parse(localStorage.getItem('blessings') || '[]');
-            blessings.push({ name: name || 'Anonymous', message: msg });
-            localStorage.setItem('blessings', JSON.stringify(blessings));
-            document.getElementById('blessingName').value = '';
-            document.getElementById('blessingMessage').value = '';
-            renderBlessings(blessings);
-            playChimeSequence();
-        });
-
-        function loadBlessings() {
-            renderBlessings(JSON.parse(localStorage.getItem('blessings') || '[]'));
-        }
-
-        function renderBlessings(blessings) {
-            const list = document.getElementById('blessingsList');
-            list.innerHTML = blessings.map(b => `
-                <div class="blessing-card">
-                    <div>“${b.message}”</div>
-                    <div class="author">— ${b.name}</div>
-                </div>
-            `).join('');
-        }
-        */
 
         // ---------- FLOATING LANTERNS ----------
         document.getElementById('releaseLantern').addEventListener('click', () => {
