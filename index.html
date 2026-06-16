@@ -9,15 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #c9a96e;
-            --gold-light: #dcc89b;
-            --gold-dark: #a6844c;
-            --cream: #fdf8f0;
-            --cream-dark: #f5ecd7;
-            --white: #ffffff;
-            --text: #3d332b;
-            --text-light: #6b5f55;
-            --text-lighter: #8c7f74;
+            --primary: #5b7db1;
+            --primary-light: #7fa3d1;
+            --primary-dark: #3d5a8c;
+            --accent: #a0c4e8;
+            --bg: #f5f8fc;
+            --bg-card: #ffffff;
+            --text: #2c3a4d;
+            --text-light: #556b82;
+            --text-lighter: #7a8ea3;
             --sage: #b7c9b1;
             --sage-light: #dce8d7;
             --card-shadow: 0 4px 30px rgba(0,0,0,0.05), 0 1px 6px rgba(0,0,0,0.03);
@@ -29,7 +29,7 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-            background: radial-gradient(ellipse at 50% 0%, #fdf8f0 0%, #f9f2e4 40%, #fdf7ef 70%, #faf3e8 100%);
+            background: radial-gradient(ellipse at 50% 0%, #f5f8fc 0%, #eaf1f8 40%, #f0f5fa 70%, #f5f8fc 100%);
             background-attachment: fixed;
             color: var(--text);
             min-height: 100vh;
@@ -43,14 +43,14 @@
         }
         #particlesCanvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
         .main-wrapper {
-            position:relative; z-index:1; width:100%; max-width:620px;
+            position:relative; z-index:1; width:100%; max-width:660px;
             display:flex; flex-direction:column; align-items:center; gap:28px; padding:10px 0 50px;
         }
 
         /* Envelope overlay */
         .envelope-overlay {
             position:fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(253,248,240,0.97); backdrop-filter: blur(8px);
+            background: rgba(245,248,252,0.97); backdrop-filter: blur(8px);
             display:flex; align-items:center; justify-content:center;
             z-index:1000; transition: opacity 0.6s ease, visibility 0.6s;
             opacity:1; visibility:visible; cursor:pointer;
@@ -65,7 +65,7 @@
         .envelope-overlay:hover .envelope-icon { transform:scale(1.04); }
         .envelope-text {
             font-family:'Montserrat',sans-serif; text-transform:uppercase; letter-spacing:4px;
-            font-size:13px; font-weight:500; color:var(--gold-dark); margin-top:12px;
+            font-size:13px; font-weight:500; color:var(--primary-dark); margin-top:12px;
         }
 
         /* Music toggle */
@@ -73,9 +73,9 @@
             position:fixed; bottom:24px; right:24px; width:48px; height:48px; border-radius:50%;
             background:white; box-shadow:var(--card-shadow); display:flex; align-items:center;
             justify-content:center; font-size:20px; z-index:900; cursor:pointer;
-            border:2px solid var(--gold-light); transition:all 0.3s; user-select:none;
+            border:2px solid var(--primary-light); transition:all 0.3s; user-select:none;
         }
-        .music-toggle:hover { background:var(--gold-light); color:white; border-color:var(--gold); transform:scale(1.06); }
+        .music-toggle:hover { background:var(--primary-light); color:white; border-color:var(--primary); transform:scale(1.06); }
 
         /* Scroll reveal */
         .reveal {
@@ -86,7 +86,7 @@
 
         /* Hero card */
         .hero-card {
-            background:var(--white); border-radius:var(--border-radius);
+            background:var(--bg-card); border-radius:var(--border-radius);
             padding:50px 36px 48px; text-align:center; width:100%;
             box-shadow:var(--card-shadow); position:relative; overflow:hidden;
             transition: transform 0.2s ease-out, box-shadow 0.3s;
@@ -94,18 +94,18 @@
         }
         .hero-card::before {
             content:''; position:absolute; top:-60px; left:-60px; width:200px; height:200px;
-            background:radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+            background:radial-gradient(circle, rgba(91,125,177,0.10) 0%, transparent 70%);
             border-radius:50%; pointer-events:none;
         }
         .hero-card::after {
             content:''; position:absolute; bottom:-50px; right:-50px; width:180px; height:180px;
-            background:radial-gradient(circle, rgba(183,201,177,0.10) 0%, transparent 70%);
+            background:radial-gradient(circle, rgba(160,196,232,0.10) 0%, transparent 70%);
             border-radius:50%; pointer-events:none;
         }
         .cross-icon {
-            font-size:44px; color:var(--gold); margin-bottom:10px; display:block;
+            font-size:44px; color:var(--primary); margin-bottom:10px; display:block;
             animation: gentleShimmer 3s ease-in-out infinite;
-            filter:drop-shadow(0 2px 8px rgba(201,169,110,0.3)); cursor:pointer;
+            filter:drop-shadow(0 2px 8px rgba(91,125,177,0.3)); cursor:pointer;
         }
         @keyframes gentleShimmer {
             0%,100% { transform:scale(1); opacity:0.9; }
@@ -115,19 +115,19 @@
         .photo-halo {
             position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
             width:130px; height:130px; border-radius:50%;
-            background:conic-gradient(from 0deg, var(--gold-light), transparent, var(--gold-light), transparent);
-            animation: rotateHalo 8s linear infinite; opacity:0.5; filter:blur(12px);
+            background:conic-gradient(from 0deg, var(--primary-light), transparent, var(--accent), transparent);
+            animation: rotateHalo 8s linear infinite; opacity:0.4; filter:blur(12px);
         }
         @keyframes rotateHalo { to { transform:translate(-50%,-50%) rotate(360deg); } }
         .baby-photo {
             width:120px; height:120px; border-radius:50%; object-fit:cover;
-            border:4px solid var(--gold-light); box-shadow:0 4px 16px rgba(0,0,0,0.1);
+            border:4px solid var(--primary-light); box-shadow:0 4px 16px rgba(0,0,0,0.1);
             transition:transform 0.3s; cursor:pointer; z-index:1; position:relative;
         }
         .baby-photo:hover { transform:scale(1.06); }
         .label-baptism {
             font-family:'Montserrat',sans-serif; text-transform:uppercase; letter-spacing:5px;
-            font-size:12px; color:var(--gold-dark); margin-bottom:18px;
+            font-size:12px; color:var(--primary-dark); margin-bottom:18px;
         }
         .baby-name {
             font-family:'Great Vibes',cursive; font-size:clamp(52px,10vw,78px);
@@ -136,76 +136,108 @@
         .baby-name-sub { font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--text-light); font-style:italic; margin-bottom:24px; }
 
         /* Countdown */
-        .countdown-card { background:var(--white); border-radius:var(--border-radius); padding:28px 24px; text-align:center; width:100%; box-shadow:var(--card-shadow); }
+        .countdown-card { background:var(--bg-card); border-radius:var(--border-radius); padding:28px 24px; text-align:center; width:100%; box-shadow:var(--card-shadow); }
         .countdown-title { font-family:'Montserrat',sans-serif; letter-spacing:3px; font-size:10px; color:var(--text-lighter); margin-bottom:18px; }
         .countdown-grid { display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
         .countdown-item {
-            background:var(--cream); border-radius:var(--border-radius-sm); padding:16px 18px;
+            background:#f0f5fa; border-radius:var(--border-radius-sm); padding:16px 18px;
             min-width:68px; text-align:center; transition:var(--transition);
         }
-        .countdown-item:hover { background:var(--cream-dark); transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,0.05); }
-        .countdown-number { font-family:'Montserrat',sans-serif; font-size:34px; font-weight:600; color:var(--gold-dark); }
+        .countdown-item:hover { background:#e4edf7; transform:translateY(-2px); box-shadow:0 6px 14px rgba(0,0,0,0.05); }
+        .countdown-number { font-family:'Montserrat',sans-serif; font-size:34px; font-weight:600; color:var(--primary-dark); }
         .countdown-label { font-family:'Montserrat',sans-serif; font-size:9px; letter-spacing:2px; color:var(--text-lighter); margin-top:6px; }
 
         /* Details */
-        .details-card { background:var(--white); border-radius:var(--border-radius); padding:36px 32px; width:100%; box-shadow:var(--card-shadow); display:flex; flex-direction:column; gap:24px; }
+        .details-card { background:var(--bg-card); border-radius:var(--border-radius); padding:36px 32px; width:100%; box-shadow:var(--card-shadow); display:flex; flex-direction:column; gap:24px; }
         .detail-row { display:flex; align-items:flex-start; gap:18px; }
         .detail-icon {
-            width:46px; height:46px; border-radius:50%; background:var(--cream);
-            display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--gold-dark);
+            width:46px; height:46px; border-radius:50%; background:#f0f5fa;
+            display:flex; align-items:center; justify-content:center; font-size:20px; color:var(--primary-dark);
         }
         .detail-content h4 { font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:2px; color:var(--text-lighter); margin-bottom:6px; }
         .detail-content p { font-size:18px; font-weight:500; color:var(--text); }
         .sub-text { font-size:14px; color:var(--text-light); font-style:italic; }
         .map-link {
             display:inline-flex; align-items:center; gap:6px; font-family:'Montserrat',sans-serif;
-            font-size:11px; letter-spacing:2px; color:var(--gold-dark); text-decoration:none; margin-top:6px;
+            font-size:11px; letter-spacing:2px; color:var(--primary-dark); text-decoration:none; margin-top:6px;
             transition:gap 0.2s;
         }
         .map-link:hover { gap:10px; text-decoration:underline; }
 
-        /* Godparents */
-        .godparents-card { background:var(--white); border-radius:var(--border-radius); padding:36px 32px; text-align:center; width:100%; box-shadow:var(--card-shadow); position:relative; overflow:hidden; }
+        /* Godparents message */
+        .godparents-card { background:var(--bg-card); border-radius:var(--border-radius); padding:36px 32px; text-align:center; width:100%; box-shadow:var(--card-shadow); position:relative; overflow:hidden; }
         .godparents-badge {
-            display:inline-block; background:linear-gradient(135deg, var(--gold-light), var(--gold));
+            display:inline-block; background:linear-gradient(135deg, var(--primary-light), var(--primary));
             color:white; font-family:'Montserrat',sans-serif; letter-spacing:4px; font-size:10px;
             padding:8px 22px; border-radius:50px; margin-bottom:22px;
         }
         .godparents-card h3 { font-size:28px; font-weight:500; margin-bottom:14px; color:var(--text); }
         .godparents-card p { font-size:18px; color:var(--text-light); font-style:italic; line-height:1.7; }
-        .highlight { color:var(--gold-dark); font-weight:600; font-style:normal; }
+        .highlight { color:var(--primary-dark); font-weight:600; font-style:normal; }
+
+        /* Godparents list */
+        .godparents-list-card {
+            background:var(--bg-card); border-radius:var(--border-radius); padding:36px 32px;
+            width:100%; box-shadow:var(--card-shadow); text-align:center;
+        }
+        .godparents-list-card h3 {
+            font-family:'Montserrat',sans-serif; letter-spacing:3px; font-size:11px;
+            color:var(--text-lighter); margin-bottom:24px; text-transform:uppercase;
+        }
+        .godparents-columns {
+            display:flex; gap:28px; justify-content:center; flex-wrap:wrap;
+        }
+        .godparents-column {
+            flex:1; min-width:200px; max-width:300px;
+        }
+        .godparents-column h4 {
+            font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:3px;
+            color:var(--primary); text-transform:uppercase; margin-bottom:14px;
+            padding-bottom:8px; border-bottom:2px solid var(--accent);
+        }
+        .godparents-column ul {
+            list-style:none; display:flex; flex-direction:column; gap:8px;
+        }
+        .godparents-column li {
+            font-family:'Cormorant Garamond',serif; font-size:16px; color:var(--text);
+            padding:8px 12px; border-radius:8px; transition:all 0.25s;
+            background:transparent;
+        }
+        .godparents-column li:hover {
+            background:#f0f5fa; color:var(--primary-dark); transform:translateX(3px);
+        }
 
         /* Lantern section */
         .lantern-section {
-            background:var(--white); border-radius:var(--border-radius); padding:32px 24px;
+            background:var(--bg-card); border-radius:var(--border-radius); padding:32px 24px;
             width:100%; box-shadow:var(--card-shadow); text-align:center;
             display:flex; flex-direction:column; align-items:center; gap:16px;
         }
         .lantern-title { font-family:'Montserrat',sans-serif; letter-spacing:3px; font-size:11px; color:var(--text-lighter); margin-bottom:6px; }
         .lantern-input {
             font-family:'Montserrat',sans-serif; padding:12px 18px; border-radius:40px;
-            border:1px solid #e0d8cc; background:var(--cream); font-size:13px;
+            border:1px solid #d0dde8; background:#f5f8fc; font-size:13px;
             width:75%; text-align:center; outline:none; transition:border 0.3s;
         }
-        .lantern-input:focus { border-color:var(--gold-light); }
+        .lantern-input:focus { border-color:var(--primary-light); }
         .lantern-button {
-            font-family:'Montserrat',sans-serif; background:var(--gold); color:white; border:none;
+            font-family:'Montserrat',sans-serif; background:var(--primary); color:white; border:none;
             padding:12px 30px; border-radius:40px; font-size:12px; letter-spacing:2px;
             cursor:pointer; transition:background 0.3s, transform 0.2s;
         }
-        .lantern-button:hover { background:var(--gold-dark); transform:scale(1.03); }
+        .lantern-button:hover { background:var(--primary-dark); transform:scale(1.03); }
 
         /* RSVP */
-        .rsvp-card { background:var(--white); border-radius:var(--border-radius); padding:34px 32px; text-align:center; width:100%; box-shadow:var(--card-shadow); }
+        .rsvp-card { background:var(--bg-card); border-radius:var(--border-radius); padding:34px 32px; text-align:center; width:100%; box-shadow:var(--card-shadow); }
         .rsvp-card h4 { font-family:'Montserrat',sans-serif; letter-spacing:3px; font-size:11px; color:var(--text-lighter); margin-bottom:22px; }
         .rsvp-buttons { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
         .btn-rsvp {
             font-family:'Montserrat',sans-serif; font-size:13px; letter-spacing:2px; padding:14px 32px;
-            border-radius:50px; cursor:pointer; border:2px solid var(--gold); transition:all 0.3s;
-            background:transparent; color:var(--gold-dark);
+            border-radius:50px; cursor:pointer; border:2px solid var(--primary); transition:all 0.3s;
+            background:transparent; color:var(--primary-dark);
         }
-        .btn-rsvp.accept { background:var(--gold); color:white; border-color:var(--gold); }
-        .btn-rsvp.accept:hover { background:var(--gold-dark); border-color:var(--gold-dark); transform:translateY(-2px); box-shadow:0 8px 20px rgba(166,132,76,0.3); }
+        .btn-rsvp.accept { background:var(--primary); color:white; border-color:var(--primary); }
+        .btn-rsvp.accept:hover { background:var(--primary-dark); border-color:var(--primary-dark); transform:translateY(-2px); box-shadow:0 8px 20px rgba(61,90,140,0.3); }
         .btn-rsvp.decline:hover { background:#fdf2f2; border-color:#d4a0a0; color:#a06060; transform:translateY(-2px); }
         .rsvp-confirmation { display:none; margin-top:24px; padding:16px; border-radius:14px; background:var(--sage-light); color:#4a6b4a; font-family:'Montserrat',sans-serif; font-size:13px; animation:fadeInUp 0.5s; }
         .rsvp-confirmation.show { display:block; }
@@ -215,9 +247,9 @@
         .btn-calendar {
             display:inline-flex; align-items:center; gap:8px; font-family:'Montserrat',sans-serif;
             font-size:12px; letter-spacing:2px; color:var(--text-lighter); text-decoration:none;
-            padding:12px 26px; border:1px solid #e0d8cc; border-radius:50px; transition:all 0.3s;
+            padding:12px 26px; border:1px solid #d0dde8; border-radius:50px; transition:all 0.3s;
         }
-        .btn-calendar:hover { border-color:var(--gold-light); color:var(--gold-dark); background:white; }
+        .btn-calendar:hover { border-color:var(--primary-light); color:var(--primary-dark); background:white; }
         .footer-text {
             text-align:center; font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:2px;
             color:var(--text-lighter); opacity:0.7; margin-top:8px; background:transparent; box-shadow:none;
@@ -240,6 +272,14 @@
         @keyframes confettiFall {
             0% { opacity:1; transform:translateY(-120px) rotate(0deg) scale(1); }
             100% { opacity:0; transform:translateY(600px) rotate(720deg) scale(0.3); }
+        }
+
+        @media (max-width:480px) {
+            .godparents-columns { flex-direction:column; align-items:center; }
+            .godparents-column { max-width:100%; }
+            .hero-card { padding:36px 20px 38px; }
+            .details-card { padding:28px 20px; }
+            .lantern-input { width:90%; }
         }
     </style>
 </head>
@@ -269,15 +309,15 @@
                 <img src="gio.jpg" alt="Baby Gio Railey" class="baby-photo" id="babyPhoto">
             </div>
             <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:22px;">
-                <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
-                <span style="width:7px; height:7px; background:var(--gold); transform:rotate(45deg); opacity:0.7; border-radius:1px;"></span>
-                <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--gold-light), transparent);"></span>
+                <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--primary-light), transparent);"></span>
+                <span style="width:7px; height:7px; background:var(--primary); transform:rotate(45deg); opacity:0.7; border-radius:1px;"></span>
+                <span style="width:50px; height:1px; background: linear-gradient(90deg, transparent, var(--primary-light), transparent);"></span>
             </div>
             <p class="label-baptism">Holy Baptism</p>
             <h1 class="baby-name">Gio Railey</h1>
             <p class="baby-name-sub">Son of Lee Adonis &amp; Ghena Clear</p>
             <p style="font-size:21px; line-height:1.6; color:var(--text);">
-                We joyfully invite you, our beloved <span style="color:var(--gold-dark); font-weight:600; font-style:italic;">Ninang &amp; Ninong</span>,<br>
+                We joyfully invite you, our beloved <span style="color:var(--primary-dark); font-weight:600; font-style:italic;">Ninang &amp; Ninong</span>,<br>
                 to witness and celebrate this sacred milestone.
             </p>
         </div>
@@ -300,11 +340,83 @@
             <div class="detail-row"><div class="detail-icon">🥘</div><div class="detail-content"><h4>After the Ceremony</h4><p>Simple Fellowship Meal</p><p class="sub-text">Brgy. Sawat, Tagudin, Ilocos Sur</p><a href="https://maps.google.com/?q=Home+Sawat&ftid=0x0:0x4a42b0bfb9970f69&entry=gps" target="_blank" class="map-link">View on Map →</a></div></div>
         </div>
 
-        <!-- GODPARENTS -->
+        <!-- GODPARENTS MESSAGE -->
         <div class="godparents-card reveal">
             <span class="godparents-badge">Ninang &amp; Ninong</span>
             <h3>You Are Chosen<br>with Love &amp; Faith</h3>
             <p>As <span class="highlight">godparents</span>, you hold a special place in our son's life — guiding him in faith, surrounding him with love, and being a light on his spiritual journey.</p>
+        </div>
+
+        <!-- GODPARENTS LIST -->
+        <div class="godparents-list-card reveal">
+            <h3>Our Beloved Godparents</h3>
+            <div class="godparents-columns">
+                <!-- Ninongs -->
+                <div class="godparents-column">
+                    <h4>🐏 Ninongs</h4>
+                    <ul>
+                        <li>Aldwin Panganiban</li>
+                        <li>John Paul Benito</li>
+                        <li>John Carlo Lapitan</li>
+                        <li>Deo Ongotan</li>
+                        <li>Dane Laurenz Villegas</li>
+                        <li>Revin King Lorena</li>
+                        <li>Renald Lester Lorenzana</li>
+                        <li>Michael Mostoles</li>
+                        <li>Joshua Espinoza</li>
+                        <li>Carlben Bea</li>
+                        <li>Marzan Crispin</li>
+                        <li>Ejie Somera</li>
+                        <li>Joehannz Ivo Mifa</li>
+                        <li>Jeff Dylan Longinos</li>
+                        <li>Jaymark Ermitanio</li>
+                        <li>August Ibardolaza Villanueva</li>
+                        <li>Stephen Natividad</li>
+                        <li>Hener Lorenzana</li>
+                        <li>John Michael Foster</li>
+                        <li>James Quario</li>
+                        <li>Bernardo Catriz</li>
+                        <li>Justine Lucero</li>
+                        <li>Louie Lucero</li>
+                        <li>Bonie Veracion Jr.</li>
+                        <li>Al John Piano</li>
+                        <li>Lucky Lagundino</li>
+                        <li>Patrick Pescador</li>
+                        <li>James Lota</li>
+                        <li>Justine Fontejon</li>
+                        <li>Patrick Lucero</li>
+                        <li>Rdee Jimrex Loquing</li>
+                    </ul>
+                </div>
+                <!-- Ninangs -->
+                <div class="godparents-column">
+                    <h4>🐑 Ninangs</h4>
+                    <ul>
+                        <li>Devina Andaya</li>
+                        <li>Michelle Somera</li>
+                        <li>Karylle Dabalos</li>
+                        <li>Nishren Hernandez</li>
+                        <li>Louverne Kylene Cardenas</li>
+                        <li>Ellie Baltazar</li>
+                        <li>Eljean Criste Montero</li>
+                        <li>Jessa De Guzman Cancino</li>
+                        <li>Kate Anne Rivera</li>
+                        <li>Christine Taberdo</li>
+                        <li>Liera Mae Habon</li>
+                        <li>Trisha Lozano</li>
+                        <li>Ghina Cris De Guzman</li>
+                        <li>Racquel Dapiaoen</li>
+                        <li>Aiza Lanuza</li>
+                        <li>Joyce Galanta Lardizabal</li>
+                        <li>Milline Joy Corpuz</li>
+                        <li>Mary Grace Dispo</li>
+                        <li>Emery Torres</li>
+                        <li>Alieja Escalante</li>
+                        <li>Rosebelle Larioza Lazaga</li>
+                        <li>Jillian Natividad</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <!-- LANTERN -->
@@ -332,7 +444,6 @@
     </div>
 
     <script>
-        // ---- SOUND EFFECTS ----
         function playChime(freq=880, dur=0.2, type='sine') {
             try {
                 const ctx = new (window.AudioContext||window.webkitAudioContext)();
@@ -347,27 +458,22 @@
             playChime(660,0.2); setTimeout(()=>playChime(880,0.25),150); setTimeout(()=>playChime(1100,0.3),300);
         }
 
-        // ---- ENVELOPE & REVEAL ----
         const envelope = document.getElementById('envelopeOverlay');
         const wrapper = document.getElementById('mainWrapper');
         envelope.addEventListener('click', ()=>{
             envelope.classList.add('hidden');
             wrapper.style.display='flex';
-            // activate scroll reveal after envelope
             const reveals = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries)=>{
                 entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
             },{threshold:0.2});
             reveals.forEach(el=>observer.observe(el));
-            // also make first few visible immediately
             document.querySelector('.hero-card').classList.add('visible');
             updateCountdown();
             setInterval(updateCountdown,1000);
-            // start ambient music after user gesture
             startAmbient();
         });
 
-        // ---- AMBIENT MUSIC ----
         let audioCtx=null, oscillators=[], isPlaying=false;
         function startAmbient() {
             if(isPlaying) return;
@@ -391,7 +497,6 @@
             isPlaying ? stopAmbient() : startAmbient();
         });
 
-        // ---- COUNTDOWN June 20, 7:30 AM ----
         const baptismDate = new Date('2026-06-20T07:30:00+08:00');
         function updateCountdown() {
             const diff = baptismDate - new Date();
@@ -405,7 +510,6 @@
             document.getElementById('countdown-seconds').textContent = String(Math.floor((diff%(1000*60))/1000)).padStart(2,'0');
         }
 
-        // ---- RSVP & CONFETTI ----
         document.getElementById('btnAccept').addEventListener('click',()=>handleRSVP('accept'));
         document.getElementById('btnDecline').addEventListener('click',()=>handleRSVP('decline'));
         function handleRSVP(type) {
@@ -424,7 +528,7 @@
             document.getElementById('btnDecline').style.pointerEvents='none';
         }
         function spawnConfetti() {
-            const colors=['#c9a96e','#dcc89b','#e8d5b7','#f2e4df','#b7c9b1','#dce8d7'];
+            const colors=['#5b7db1','#7fa3d1','#a0c4e8','#b7c9b1','#dce8d7','#e4edf7'];
             for(let i=0;i<50;i++) {
                 setTimeout(()=>{
                     const p=document.createElement('div');
@@ -439,7 +543,6 @@
             }
         }
 
-        // ---- LANTERN ----
         document.getElementById('releaseLantern').addEventListener('click',()=>{
             const msg = document.getElementById('lanternMessage').value.trim();
             if(!msg) return;
@@ -453,7 +556,6 @@
             setTimeout(()=>lantern.remove(),6000);
         });
 
-        // ---- PHOTO LIGHTBOX ----
         document.getElementById('babyPhoto').addEventListener('click',()=>{
             document.getElementById('lightbox').classList.add('active');
         });
@@ -464,7 +566,6 @@
             if(e.target===document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('active');
         });
 
-        // ---- 3D TILT ----
         const heroCard = document.getElementById('heroCard');
         heroCard.addEventListener('mousemove',(e)=>{
             const rect=heroCard.getBoundingClientRect();
@@ -477,7 +578,6 @@
             heroCard.style.transform='perspective(600px) rotateX(0) rotateY(0)';
         });
 
-        // ---- PARTICLES (gentle) ----
         const pCanvas=document.getElementById('particlesCanvas');
         const pCtx=pCanvas.getContext('2d');
         let particles=[], mouse={x:null,y:null};
@@ -514,7 +614,7 @@
                 const twinkle=Math.sin(this.twinkle)*0.25+0.75;
                 ctx.beginPath();
                 ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-                ctx.fillStyle=`rgba(220,200,150,${this.opacity*twinkle})`;
+                ctx.fillStyle=`rgba(160,196,232,${this.opacity*twinkle})`;
                 ctx.fill();
             }
         }
@@ -526,9 +626,8 @@
         }
         animateParticles();
 
-        // ---- CROSS SCRIPTURE ----
         document.getElementById('crossIcon').addEventListener('click',()=>{
-            alert('“Let the little children come to me.” – Matthew 19:14');
+            alert('"Let the little children come to me." – Matthew 19:14');
             playChime(1500,0.4);
         });
     </script>
